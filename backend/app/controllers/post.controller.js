@@ -3,7 +3,7 @@ const Post = db.posts;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Post
-exports.create = (req, res) => {
+exports.create = (req, res, next) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Posts from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req, res, next) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Post with an id
-exports.findOne = (req, res) => {
+exports.findOne = (req, res, next) => {
   const id = req.params.id;
 
   Post.findById(id)
@@ -64,7 +64,7 @@ exports.findOne = (req, res) => {
 };
 
 // Update a Post by the id in the request
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
   const id = req.params.id;
 
   Post.update(req.body, {
@@ -89,7 +89,7 @@ exports.update = (req, res) => {
 };
 
 // Delete a Post with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
   const id = req.params.id;
 
   Post.destroy({
@@ -114,7 +114,7 @@ exports.delete = (req, res) => {
 };
 
 // Delete all Posts from the database.
-exports.deleteAll = (req, res) => {
+exports.deleteAll = (req, res, next) => {
   Post.destroy({
     where: {},
     truncate: false

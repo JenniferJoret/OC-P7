@@ -1,24 +1,29 @@
-const dbConfig = require("../config/db.config.js");
+'use strict'
+require('dotenv').config();
+const Sequelize = require('sequelize'); 
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  operatorsAliases: false,
-
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
+const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD, {
+  host: process.env.DATABASE_HOST,
+  dialect: process.env.DATABASE_DIALECT,
+  define: {
+    underscored: true
   }
 });
 
+// Connect all the models/tables in the database to a db object, 
+//so everything is accessible via one object
 const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.posts = require("./post.model.js")(sequelize, Sequelize);
+//Models/tables
+db.users = require('../models/user.model.js')(sequelize, Sequelize);
+db.posts = require('../models/post.model.js')(sequelize, Sequelize);
+
+//Relations
+//db.comments.belongsTo(db.posts);
+//db.posts.belongsTo(db.users);
+//db.users.hasMany(db.posts);
 
 module.exports = db;
