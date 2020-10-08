@@ -22,8 +22,7 @@ db.users = require('../models/user.model.js')(sequelize, Sequelize);
 db.posts = require('../models/post.model.js')(sequelize, Sequelize);
 
 //Relations
-//db.comments.belongsTo(db.posts);
-//db.posts.belongsTo(db.users);
-//db.users.hasMany(db.posts);
+db.posts.belongsTo(db.users);
+db.users.hasMany(db.posts);
 
 module.exports = db;

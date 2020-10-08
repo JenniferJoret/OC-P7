@@ -28,10 +28,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         created_at: {
             type: DataTypes.DATE,
-            allowNull: false
-        },
-        updated_at: DataTypes.DATE,
-        deleted_at: DataTypes.DATE
+            value: sequelize.fn('NOW')
+        }
     }, {
         underscored: true
     });

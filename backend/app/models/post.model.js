@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define('post', {
     user_id: {
-      type: DataTypes.UUID,
+      type: DataTypes.NUMBER,
       allowNull: false
     },
     title: {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     created_at: {
       type: DataTypes.DATE,
-      allowNull: false
+      value: sequelize.fn('NOW')
     },
     updated_at:  DataTypes.DATE,
     deleted_at: DataTypes.DATE
