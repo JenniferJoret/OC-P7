@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define('post', {
-    user_id: {
-      type: DataTypes.NUMBER,
-      allowNull: false
-    },
+    // user_id: {
+    // //   type: DataTypes.TEXT,
+    // //   allowNull: false
+    // // },
     title: {
       type: DataTypes.TEXT,
       required: true
@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     created_at: {
       type: DataTypes.DATE,
       value: sequelize.fn('NOW')
-    },
-    updated_at:  DataTypes.DATE,
-    deleted_at: DataTypes.DATE
+    }
+    // updated_at:  DataTypes.DATE,
+    // deleted_at: DataTypes.DATE
   }, {
     underscored: true
   });
