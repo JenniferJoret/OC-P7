@@ -64,7 +64,6 @@ hr {
 }
 
 #listPosts {
-  padding-top: 6rem;
   color: #0A1F43;
   background: url("../img/home-bg.jpg");
   background-size: cover;
@@ -79,17 +78,19 @@ hr {
   z-index: 1;
 }
 
-.fixed-left {
-  top: 20%;
-  left: 5%;
+.info-fixed {
+  top: 0%;
   position: fixed;
-  max-height: 10vh;
+  height: 100vh;
 }
-
-.fixed-right {
-  top: 20%;
+.info-fixed.--left {
+  left: 5%;
+}
+.info-fixed.--right {
   right: 5%;
-  position: fixed;
+}
+.info-fixed h2 {
+  margin-top: 10vh;
 }
 
 .bg-main-color {

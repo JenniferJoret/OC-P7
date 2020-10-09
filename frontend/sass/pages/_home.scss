@@ -1,28 +1,36 @@
 #listPosts {
-  padding-top: 6rem;
   color: $gpmTextColor;
   background: url("../img/home-bg.jpg");
   background-size: cover;
   background-position: left;
   background-attachment: fixed;
+
   article {
     padding-top: 1.5rem;
     background-color: rgba($color: #fff, $alpha: .8);
   }
-  section{
+
+  section {
     z-index: 1;
   }
 }
-.fixed-left{
-  top: 20%;
-  left: 5%;
+
+.info-fixed {
+  &.--left {
+    left: 5%;
+  }
+
+  &.--right {
+    right: 5%;
+  }
+
+  top: 0%;
   position: fixed;
-  max-height: 10vh;
-}
-.fixed-right{
-  top: 20%;
-  right: 5%;
-  position: fixed;
+  height: 100vh; 
+  
+  h2 {
+    margin-top: 10vh;
+  }
 }
 
 .bg-main-color {
