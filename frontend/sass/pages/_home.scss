@@ -4,10 +4,12 @@
   background-size: cover;
   background-position: left;
   background-attachment: fixed;
+  min-height: 100vh;
 
   article {
     padding-top: 1.5rem;
     background-color: rgba($color: #fff, $alpha: .8);
+    width: 100%;
   }
 
   section {
@@ -26,8 +28,8 @@
 
   top: 0%;
   position: fixed;
-  height: 100vh; 
-  
+  height: 100vh;
+
   h2 {
     margin-top: 10vh;
   }

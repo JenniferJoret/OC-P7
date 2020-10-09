@@ -1,5 +1,6 @@
 const db = require("../models");
 const User = db.users;
+const Post = db.posts;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new User
@@ -33,19 +34,24 @@ exports.create = (req, res) => {
 };
 exports.findAll = (req, res, next) => {
     const firstName = req.query.firstName;
-    var condition = firstName ? { firstName: { [Op.like]: `%${firstName}%` } } : null;
-  
-    User.findAll({ where: condition })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving posts."
+    var condition = firstName ? {
+        firstName: {
+            [Op.like]: `%${firstName}%`
+        }
+    } : null;
+
+    User.findAll({
+            where: condition
+        })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while retrieving posts."
+            });
         });
-      });
-  };
+};
 // Find a single User with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;

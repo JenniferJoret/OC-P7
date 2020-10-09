@@ -1,5 +1,6 @@
 const db = require("../models");
 const Post = db.posts;
+const User = db.users;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Post
@@ -14,6 +15,7 @@ exports.create = (req, res, next) => {
 
   // Create a Post
   const post = {
+    user_id: "1",
     title: req.body.title,
     content: req.body.content
   };
@@ -36,7 +38,10 @@ exports.findAll = (req, res, next) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Post.findAll({ where: condition })
+  Post.findAll({ include: [{
+    model: User,
+    attributes: ['first_name']  
+  }], })
     .then(data => {
       res.send(data);
     })
@@ -52,7 +57,10 @@ exports.findAll = (req, res, next) => {
 exports.findOne = (req, res, next) => {
   const id = req.params.id;
 
-  Post.findOne(id)
+  Post.findOne({
+    where: {id : id},
+  include: User 
+  })
     .then(data => {
       res.send(data);
     })

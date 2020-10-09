@@ -24,7 +24,7 @@
           <hr>
           <div class="d-flex">
             <div class="date px-2"><i class="far fa-clock pr-1"></i>23.04</div>
-            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">Utilisateur</a>
+            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.first_name }}</a>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
                 class="fas fa-comment-dots pl-1"></i></a></div>
         </div>
       </article>
-
+<span>Il n'y a plus rien à afficher !</span>
     </section>
 
     <div class="test col-2 bg-main-color p-4 align-self-center info-fixed --right d-none d-xl-table">
@@ -84,12 +84,14 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    }    
+    }
   },
   mounted() {
     this.retrievePosts();
   }
 };
+
+
 </script>
 
 <style>

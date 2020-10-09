@@ -18,11 +18,15 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 //Models/tables
-//db.users = require('../models/user.model.js')(sequelize, Sequelize);
+db.users = require('../models/user.model.js')(sequelize, Sequelize);
+db.comments = require('../models/comments.js')(sequelize, Sequelize);
 db.posts = require('../models/post.model.js')(sequelize, Sequelize);
 
 //Relations
-// db.posts.belongsTo(db.users);
-// db.users.hasMany(db.posts);
+db.comments.belongsTo(db.posts);
+db.posts.hasMany(db.comments);
+db.posts.belongsTo(db.users);
+db.users.hasMany(db.posts);
+
 
 module.exports = db;
