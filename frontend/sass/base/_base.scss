@@ -1,0 +1,20 @@
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  
+}
+body {
+  background-color: white;
+}
+//changer la couleur lors du surlignage
+::selection {
+  background: $gpmMainColor;
+  color: white;
+}
+hr{
+  background-color: $gpmSecondColor;
+  box-shadow: 0px 1px 2px white;
+}
+.text-second{
+color: $gpmSecondColor;
+}

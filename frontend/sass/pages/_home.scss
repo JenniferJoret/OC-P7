@@ -1,0 +1,39 @@
+#listPosts {
+  padding-top: 6rem;
+  color: $gpmTextColor;
+  background: url("../img/home-bg.jpg");
+  background-size: cover;
+  background-position: left;
+  background-attachment: fixed;
+  article {
+    padding-top: 1.5rem;
+    background-color: rgba($color: #fff, $alpha: .8);
+  }
+  section{
+    z-index: 1;
+  }
+}
+.fixed-left{
+  top: 20%;
+  left: 5%;
+  position: fixed;
+  max-height: 10vh;
+}
+.fixed-right{
+  top: 20%;
+  right: 5%;
+  position: fixed;
+}
+
+.bg-main-color {
+  background-color: $gpmMainColor;
+}
+
+.video-wrap {
+  margin: auto;
+
+  iframe {
+    min-height: 100%;
+    width: 100%;
+  }
+}
