@@ -3,9 +3,26 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    name: 'Accueil',
-    component: () => import(/* webpackChunkName: "postsList" */ '../views/postsList.vue')
-  }
+    alias: "/posts",
+    component: () => import('../components/PostsList.vue')
+  },
+  {
+    path: '/add',
+    component: () => import('../components/AddPost.vue')
+  },
+  {
+    path: "/post/:id",
+    component: () => import("../components/Post.vue"),
+    props: true,
+  },
+  {
+    path: "/f-text",
+    component: () => import("../components/f-text.vue")
+  },
+  {
+    path: "/f-media",
+    component: () => import("../components/f-media.vue")
+  },
 ]
 
 const router = createRouter({

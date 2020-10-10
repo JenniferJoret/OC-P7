@@ -1,5 +1,5 @@
 <template>
-  <div id="listPosts" class="d-flex justify-content-center">
+  <div id="single-post" class="d-flex justify-content-center">
     <div class="layer"></div>
     <div class="test col-2 bg-main-color p-4 align-self-center info-fixed --left d-none d-xl-table">
       <h2 class="actus text-white text-center pb-4">Dernières actualités chez <span
@@ -18,13 +18,13 @@
 
     </div>
     <section class="articles d-flex flex-column align-items-center my-5 py-2 col-xl-6">
-      <article class="main-post m-5 d-table" v-for="(post, index) in posts" :key="index">
+      <article class="main-post bg-t-white m-5 d-table" v-for="(post, index) in posts" :key="index">
         <div class="post-content mx-auto text-center px-4">
-          <a href="post.html" class="h2">{{ post.title }}</a>
+          <router-link class="h2" :to="'/post/' + post.id">{{ post.title }}</router-link>
           <hr>
           <div class="d-flex">
-            <div class="date px-2"><i class="far fa-clock pr-1"></i>23.04</div>
-            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.first_name }}</a>
+            <div class="date px-2"><i class="far fa-clock pr-1"></i>{{ post.created_at }}</div>
+            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName + " " + post.user.lastName }}</a>
             </div>
           </div>
         </div>
@@ -40,7 +40,8 @@
                 class="fas fa-comment-dots pl-1"></i></a></div>
         </div>
       </article>
-<span>Il n'y a plus rien à afficher !</span>
+      
+<span class="bg-t-white px-5 py-3 w-100 text-center">Il n'y a plus rien à afficher !</span>
     </section>
 
     <div class="test col-2 bg-main-color p-4 align-self-center info-fixed --right d-none d-xl-table">

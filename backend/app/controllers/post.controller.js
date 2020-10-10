@@ -4,7 +4,7 @@ const User = db.users;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Post
-exports.create = (req, res, next) => {
+exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -27,39 +27,42 @@ exports.create = (req, res, next) => {
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Post."
+        message: err.message || "Some error occurred while creating the Post."
       });
     });
 };
 
 // Retrieve all Posts from the database.
-exports.findAll = (req, res, next) => {
+exports.findAll = (req, res) => {
   const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  var condition = title ? {
+    title: {
+      [Op.like]: `%${title}%`
+    }
+  } : null;
 
-  Post.findAll({ include: [{
-    model: User,
-    attributes: ['first_name']  
-  }], })
+  Post.findAll({ where: condition,
+      include: [{
+        model: User
+      }]
+    })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving posts."
+        message: err.message || "Some error occurred while retrieving posts."
       });
     });
 };
 
 // Find a single Post with an id
-exports.findOne = (req, res, next) => {
+exports.findOne = (req, res) => {
   const id = req.params.id;
-
-  Post.findOne({
-    where: {id : id},
-  include: User 
+  Post.findByPk(id,{
+      include: [{
+        model: User
+      }]
   })
     .then(data => {
       res.send(data);
@@ -72,12 +75,14 @@ exports.findOne = (req, res, next) => {
 };
 
 // Update a Post by the id in the request
-exports.update = (req, res, next) => {
+exports.update = (req, res) => {
   const id = req.params.id;
 
   Post.update(req.body, {
-    where: { id: id }
-  })
+      where: {
+        id: id
+      }
+    })
     .then(num => {
       if (num == 1) {
         res.send({
@@ -101,8 +106,10 @@ exports.delete = (req, res, next) => {
   const id = req.params.id;
 
   Post.destroy({
-    where: { id: id }
-  })
+      where: {
+        id: id
+      }
+    })
     .then(num => {
       if (num == 1) {
         res.send({
@@ -124,17 +131,17 @@ exports.delete = (req, res, next) => {
 // Delete all Posts from the database.
 exports.deleteAll = (req, res, next) => {
   Post.destroy({
-    where: {},
-    truncate: false
-  })
+      where: {},
+      truncate: false
+    })
     .then(nums => {
-      res.send({ message: `${nums} Posts were deleted successfully!` });
+      res.send({
+        message: `${nums} Posts were deleted successfully!`
+      });
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all posts."
+        message: err.message || "Some error occurred while removing all posts."
       });
     });
 };
-

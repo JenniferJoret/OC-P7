@@ -16,9 +16,6 @@ class UserDataService {
   update(id, data) {
     return http.put(`/users/${id}`, data);
   }
-  test() {
-    return http.get(`/test/`);
-  }
 
   delete(id) {
     return http.delete(`/users/${id}`);
