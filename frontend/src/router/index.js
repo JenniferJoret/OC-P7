@@ -23,6 +23,10 @@ const routes = [
     path: "/f-media",
     component: () => import("../components/f-media.vue")
   },
+  {
+    path :'/:catchAll(.*)',
+    component: () => import("../components/notFound.vue")
+  }
 ]
 
 const router = createRouter({

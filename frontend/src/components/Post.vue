@@ -72,7 +72,7 @@ export default {
   created() {
     this.message = '';
     this.getPost(this.$route.params.id)
-}
+  }
 }
 </script>
 

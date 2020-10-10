@@ -20,7 +20,7 @@
     <section class="articles d-flex flex-column align-items-center my-5 py-2 col-xl-6">
       <article class="main-post bg-t-white m-5 d-table" v-for="(post, index) in posts" :key="index">
         <div class="post-content mx-auto text-center px-4">
-          <router-link class="h2" :to="'/post/' + post.id">{{ post.title }}</router-link>
+          <router-link class="h2"  :to="'/post/' + post.id">{{ post.title }}</router-link>
           <hr>
           <div class="d-flex">
             <div class="date px-2"><i class="far fa-clock pr-1"></i>{{ post.created_at }}</div>
@@ -36,8 +36,7 @@
           </div>
           <div class="dislike btn btn-outline-dark px-2 mx-1 "><a href="#"><i
                 class="fas fa-thumbs-down pr-1"></i>4012</a></div>
-          <div class="comments btn btn-outline-dark px-2 mx-4"><a href="post.html">63 commentaires<i
-                class="fas fa-comment-dots pl-1"></i></a></div>
+          <div class="comments btn btn-outline-dark px-2 mx-4"><a href="post.html">63 commentaires<i class="fas fa-comment-dots pl-1"></i></a></div>
         </div>
       </article>
       
@@ -90,7 +89,7 @@ export default {
   mounted() {
     this.retrievePosts();
   }
-};
+}
 
 
 </script>
