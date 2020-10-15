@@ -1,34 +1,22 @@
 <template>
-  <div class="submit-form mt-5 pt-5">
+  <div class="submit-form bg-t-white p-4">
+    <h1 class="text-center">Ajouter un post</h1>
     <div v-if="!submitted">
-      <div class="form-group mt-5 pt-5">
+      <div class="form-group">
         <label for="title">Titre</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          required
-          v-model="post.title"
-          name="title"
-        />
+        <input type="text" class="form-control" id="title" required v-model="post.title" name="title" />
       </div>
 
       <div class="form-group">
         <label for="content">Contenu</label>
-        <input
-          class="form-control"
-          id="content"
-          required
-          v-model="post.content"
-          name="content"
-        />
+        <input class="form-control" id="content" required v-model="post.content" name="content" />
       </div>
 
       <button @click="savePost" class="btn btn-success">Poster !</button>
     </div>
 
     <div v-else>
-      <h4>You submitted successfully!</h4>
+      <h4>Le post a bien été envoyé !</h4>
       <button class="btn btn-success" @click="newPost">Un autre ?</button>
     </div>
   </div>
@@ -36,17 +24,20 @@
 
 <script>
 import PostDataService from "../services/PostDataService";
+import Post from '../models/post';
 
 export default {
   name: "add-post",
   data() {
     return {
-      post: {
-        title: "",
-        content: "",
-      },
-      submitted : true
+      post: new Post(1, '', ''),
+      submitted: false
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
   },
   methods: {
     savePost() {
@@ -54,16 +45,11 @@ export default {
         title: this.post.title,
         content: this.post.content
       };
-
       PostDataService.create(data)
         .then(response => {
           this.post.id = response.data.id;
-          console.log(response.data);
           this.submitted = true;
         })
-        .catch(e => {
-          console.log(e);
-        });
     },
     
     newPost() {
@@ -74,9 +60,3 @@ export default {
 };
 </script>
 
-<style>
-.submit-form {
-  max-width: 300px;
-  margin: auto;
-}
-</style>

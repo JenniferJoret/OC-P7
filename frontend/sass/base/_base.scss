@@ -1,10 +1,16 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  
 }
 body {
   background-color: white;
+  background-image: url('../img/home-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+#app{
+  margin-top: 12vh;
 }
 //changer la couleur lors du surlignage
 ::selection {
@@ -19,7 +25,8 @@ hr{
 color: $gpmSecondColor;
 }
 .bg-t-white{
-  background-color: rgba($color: #fff, $alpha: .8);
+  background-color: rgba($color: #fff, $alpha: .9);
+  border-radius: 10px;
 }
 .middle-align{
   height: 100vh;

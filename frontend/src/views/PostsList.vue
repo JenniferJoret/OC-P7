@@ -24,7 +24,7 @@
           <hr>
           <div class="d-flex">
             <div class="date px-2"><i class="far fa-clock pr-1"></i>{{ post.created_at }}</div>
-            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName + " " + post.user.lastName }}</a>
+            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName }}</a>
             </div>
           </div>
         </div>
@@ -79,11 +79,7 @@ export default {
       PostDataService.getAll()
         .then(response => {
           this.posts = response.data;
-          console.log(response.data);
         })
-        .catch(e => {
-          console.log(e);
-        });
     }
   },
   mounted() {

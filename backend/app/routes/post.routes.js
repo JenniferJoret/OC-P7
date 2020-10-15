@@ -1,6 +1,5 @@
 module.exports = app => {
   const posts = require("../controllers/post.controller.js");
-
   const router = require("express").Router();
 
   // Create a new Post
@@ -21,5 +20,5 @@ module.exports = app => {
   // Delete all Posts
   router.delete("/", posts.deleteAll);
 
-  app.use('/api/posts', router);
+  app.use('/posts', router);
 };

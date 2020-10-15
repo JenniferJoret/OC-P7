@@ -2,7 +2,7 @@ import http from "../http-common";
 
 class PostDataService {
   getAll() {
-    return http.get("/posts");
+    return http.get("/AllPosts");
   }
 
   get(id) {
