@@ -34,18 +34,14 @@ exports.create = (req, res) => {
 
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? {
-        title: {
-            [Op.like]: `%${title}%`
-        }
-    } : null;
 
     Post.findAll({
-            where: condition,
-            include: [{
-                model: User
-            }]
+        order: [
+                ['created_at', 'DESC']
+            ],
+        include: [
+            {model: User}
+        ]
         })
         .then(data => {
             res.send(data);

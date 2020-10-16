@@ -10,6 +10,7 @@ import { router } from './router';
 import store from './store';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import VueMoment from 'vue-moment'
 import VeeValidate from 'vee-validate';
 import Vuex from 'vuex';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -27,9 +28,9 @@ library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faEdit);
 
 Vue.config.productionTip = false;
 
+Vue.use(VueMoment);
 Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-
 Vue.use(Vuex);
 
 new Vue({

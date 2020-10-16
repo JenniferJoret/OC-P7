@@ -5,7 +5,7 @@
           <h1 class="h1">{{ post.title }}</h1>
           <hr>
           <div class="d-flex">
-            <div class="date px-2"><i class="far fa-clock pr-1"></i>{{ post.createdAt }}</div>
+            <div class="date px-2"><i class="far fa-clock pr-1"></i>{{ post.created_at }}</div>
             <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName }}</a>
             </div>
           </div>

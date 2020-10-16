@@ -1,34 +1,34 @@
 <template>
-  <div id="single-post" class="d-flex justify-content-center">
-    <div class="layer"></div>
-    <div class="test col-2 bg-main-color p-4 align-self-center info-fixed --left d-none d-xl-table">
+  <div id="listPosts" class="d-flex flex-column flex-wrap col-12">
+    <div class="bg-main-color p-4 info-fixed --left d-none d-xl-block">
       <h2 class="actus text-white text-center pb-4">Dernières actualités chez <span
           class="text-second">Groupomania</span> </h2>
       <hr>
       <div class="text-center text-white py-2">
         <h4>L'Automne est arrivé !</h4>
-        <p class="px-3"> Préparez-vous à la fête d'Halloween et n'oubliez pas de participer à la tombola !</p>
+        <p class=""> Préparez-vous à la fête d'Halloween et n'oubliez pas de participer à la tombola !</p>
       </div>
       <div class="text-center text-white py-2">
         <h4>Réunion trimestrielle</h4>
-        <p class="px-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores quia, officia autem,
+        <p class="">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores quia, officia autem,
           aliquid voluptatibus suscipit provident molestiae soluta corporis recusandae quisquam, doloremque ab hic! Eum
           molestias quae odio placeat animi. </p>
       </div>
-
     </div>
-    <section class="articles d-flex flex-column align-items-center my-5 py-2 col-xl-6">
-      <article class="main-post bg-t-white m-5 d-table" v-for="(post, index) in posts" :key="index">
-        <div class="post-content mx-auto text-center px-4">
+    <h1 class="bg-t-white px-5 py-3 w-100 text-center text-second col-xl-6 mx-auto">Fil d'actualité</h1>
+
+    <section class="articles d-flex w-100 flex-column align-items-center mb-5 py-2 col-xl-6 mx-auto">
+      <article class="main-post bg-t-white m-4 d-table" v-for="(post, index) in posts" :key="index">
+        <div class="post-content mx-auto text-center px-4 pt-3">
           <router-link class="h2"  :to="'/post/' + post.id">{{ post.title }}</router-link>
           <hr>
           <div class="d-flex">
-            <div class="date px-2"><i class="far fa-clock pr-1"></i>{{ post.created_at }}</div>
-            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName }}</a>
+            <div class="date px-2"><p><i class="far fa-clock pr-1"></i> Posté {{ getInterval(post.created_at) }}</p></div>
+            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName +' ' + post.user.lastName }}</a>
             </div>
           </div>
         </div>
-        <div class="video-wrap my-3 d-flex justify-content-center px-4">
+        <div class="d-flex justify-content-center px-4">
           <p>{{ post.content }}</p>
         </div>
         <div class="counters-line d-flex mx-auto px-4 pb-3">
@@ -43,19 +43,21 @@
 <span class="bg-t-white px-5 py-3 w-100 text-center">Il n'y a plus rien à afficher !</span>
     </section>
 
-    <div class="test col-2 bg-main-color p-4 align-self-center info-fixed --right d-none d-xl-table">
-      <h2 class="actus text-white text-center pb-4"><span class="text-second">Groupomania</span> </h2>
+<div class=" bg-main-color p-4 info-fixed --right d-none d-xl-block">
+      <h2 class="actus text-white text-center pb-4">Dernières actualités chez <span
+          class="text-second">Groupomania</span> </h2>
       <hr>
       <div class="text-center text-white py-2">
-        <h4>Des nouvelles de nos partenaires</h4>
-        <p class="px-3"> Préparez-vous à la fête d'Halloween et n'oubliez pas de participer à la tombola !</p>
+        <h4>L'Automne est arrivé !</h4>
+        <p class=""> Préparez-vous à la fête d'Halloween et n'oubliez pas de participer à la tombola !</p>
       </div>
       <div class="text-center text-white py-2">
         <h4>Réunion trimestrielle</h4>
-        <p class="px-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores quia, officia autem,
+        <p class="">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores quia, officia autem,
           aliquid voluptatibus suscipit provident molestiae soluta corporis recusandae quisquam, doloremque ab hic! Eum
           molestias quae odio placeat animi. </p>
       </div>
+
     </div>
   </div>
   <!--End #main -->
@@ -63,6 +65,10 @@
 
 <script>
 import PostDataService from "../services/PostDataService";
+import moment from 'moment';
+import 'moment/locale/fr';  // without this line it didn't work
+moment.locale('fr');
+
 
 export default {
   name: "posts-list",
@@ -71,7 +77,6 @@ export default {
       posts: [],
       currentPost: null,
       currentIndex: -1,
-      title: ""
     };
   },
   methods: {
@@ -80,8 +85,13 @@ export default {
         .then(response => {
           this.posts = response.data;
         })
+    },
+    getInterval(date) {
+      var interval = moment(date).fromNow();
+      return interval
     }
   },
+  
   mounted() {
     this.retrievePosts();
   }

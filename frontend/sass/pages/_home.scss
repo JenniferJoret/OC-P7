@@ -1,9 +1,7 @@
 #listPosts {
   color: $gpmTextColor;
-  min-height: 100vh;
 
   article {
-    padding-top: 1.5rem;
     width: 100%;
   }
 
@@ -13,32 +11,26 @@
 }
 
 .info-fixed {
+  height: 80vh !important;
+  overflow-y: scroll;
+  width: auto;
+  position: fixed;
+  max-width: 20vw;
+
+  // position: fixed!important;
   &.--left {
-    left: 5%;
+    left: 2%;
   }
 
   &.--right {
-    right: 5%;
+    right: 2%;
   }
 
-  top: 0%;
-  position: fixed;
-  height: 100vh;
-
-  h2 {
-    margin-top: 10vh;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
 .bg-main-color {
   background-color: $gpmMainColor;
-}
-
-.video-wrap {
-  margin: auto;
-
-  iframe {
-    min-height: 100%;
-    width: 100%;
-  }
 }

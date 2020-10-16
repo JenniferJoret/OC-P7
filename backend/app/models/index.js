@@ -41,6 +41,11 @@ const sequelize = new Sequelize(
   {
     host: process.env.DATABASE_HOST,
     dialect: process.env.DATABASE_DIALECT,
+    dialectOptions: {
+      useUTC: true, //for reading from database
+      dateStrings: true,
+    },
+    timezone: 'Europe/Paris',
     operatorsAliases: false,
     pool: {
       max: 5,

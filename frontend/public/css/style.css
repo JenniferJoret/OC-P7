@@ -83,10 +83,8 @@ hr {
 
 #listPosts {
   color: #0A1F43;
-  min-height: 100vh;
 }
 #listPosts article {
-  padding-top: 1.5rem;
   width: 100%;
 }
 #listPosts section {
@@ -94,30 +92,24 @@ hr {
 }
 
 .info-fixed {
-  top: 0%;
+  height: 80vh !important;
+  overflow-y: scroll;
+  width: auto;
   position: fixed;
-  height: 100vh;
+  max-width: 20vw;
 }
 .info-fixed.--left {
-  left: 5%;
+  left: 2%;
 }
 .info-fixed.--right {
-  right: 5%;
+  right: 2%;
 }
-.info-fixed h2 {
-  margin-top: 10vh;
+.info-fixed::-webkit-scrollbar {
+  display: none;
 }
 
 .bg-main-color {
   background-color: #0A1F43;
-}
-
-.video-wrap {
-  margin: auto;
-}
-.video-wrap iframe {
-  min-height: 100%;
-  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
