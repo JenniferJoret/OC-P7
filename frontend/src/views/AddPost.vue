@@ -1,5 +1,5 @@
 <template>
-  <div class="submit-form bg-t-white p-4">
+  <div class="submit-form bg-t-white p-4 col-xl-6 mx-auto">
     <h1 class="text-center">Ajouter un post</h1>
     <div v-if="!submitted">
       <div class="form-group">

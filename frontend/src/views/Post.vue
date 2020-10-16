@@ -1,12 +1,12 @@
 <template>
   <section class="articles d-flex flex-column align-items-center my-5 py-2 col-xl-6 mx-auto">
-      <article class="main-post bg-t-white m-5 d-table">
+      <article class="main-post bg-t-white m-5 d-table w-100">
         <div class="post-content mx-auto text-center px-4">
           <h1 class="h1">{{ post.title }}</h1>
           <hr>
           <div class="d-flex">
-            <div class="date px-2"><i class="far fa-clock pr-1"></i>{{ post.created_at }}</div>
-            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName }}</a>
+            <div class="date px-2"><i class="far fa-clock pr-1"></i>Posté {{ getInterval(post.created_at) }}</div>
+            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName +' ' + post.user.lastName }}</a>
             </div>
           </div>
         </div>
@@ -27,13 +27,15 @@
 
 <script>
 import PostDataService from "../services/PostDataService";
+import moment from 'moment';
+import 'moment/locale/fr';
+moment.locale('fr');
 
 export default {
   name: "post",
   data() {
     return {
-      post: null,
-      message: ''
+      post: null
     };
   },
   methods: {
@@ -45,32 +47,13 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
-
-    updatePost() {
-      PostDataService.update(this.post.id, this.post)
-        .then(response => {
-          console.log(response.data);
-          this.message = 'The post was updated successfully!';
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-    deletePost() {
-      PostDataService.delete(this.post.id)
-        .then(response => {
-          console.log(response.data);
-          this.$router.push({ name: "post" });
-        })
-        .catch(e => {
-          console.log(e);
-        });
+    }, 
+      getInterval(date) {
+      var interval = moment(date).fromNow();
+      return interval
     }
   },
-  created() {
-    this.message = '';
+  mounted() {
     this.getPost(this.$route.params.id)
   }
 }

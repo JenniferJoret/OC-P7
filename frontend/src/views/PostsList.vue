@@ -65,10 +65,10 @@
 
 <script>
 import PostDataService from "../services/PostDataService";
-import moment from 'moment';
-import 'moment/locale/fr';  // without this line it didn't work
-moment.locale('fr');
 
+import moment from 'moment';
+import 'moment/locale/fr';
+moment.locale('fr');
 
 export default {
   name: "posts-list",
