@@ -21,7 +21,7 @@ export const router = new Router({
     },
     {
       path: '/addPost',
-      name: "addpost",
+      name: "add-post",
       component: () => import('./views/AddPost.vue')
     },
     {

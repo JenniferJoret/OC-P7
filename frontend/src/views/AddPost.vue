@@ -30,7 +30,7 @@ export default {
   name: "add-post",
   data() {
     return {
-      post: new Post(1, '', ''),
+      post: new Post( '', '', ''),
       submitted: false
     };
   },
@@ -42,6 +42,7 @@ export default {
   methods: {
     savePost() {
       var data = {
+        userId: this.currentUser.id,
         title: this.post.title,
         content: this.post.content
       };

@@ -1,24 +1,31 @@
-module.exports = app => {
-  const posts = require("../controllers/post.controller.js");
-  const router = require("express").Router();
+const { authJwt } = require("../middleware");
+const posts = require("../controllers/post.controller");
+
+module.exports = function(app) {
+  app.use(function(req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
 
   // Create a new Post
-  router.post("/", posts.create);
+  app.post("/api/posts/", posts.create);
 
   // Retrieve all Posts
-  router.get("/", posts.findAll);
+  app.get("/api/posts/", posts.findAll);
 
   // Retrieve a single Post with id
-  router.get("/:id", posts.findOne);
+  app.get("/api/posts/:id", posts.findOne);
 
   // Update a Post with id
-  router.put("/:id", posts.update);
+  app.put("/api/posts/:id", posts.update);
 
   // Delete a Post with id
-  router.delete("/:id", posts.delete);
+  app.delete("/api/posts/:id", posts.delete);
 
   // Delete all Posts
-  router.delete("/", posts.deleteAll);
+  app.delete("/api/posts/", posts.deleteAll);
 
-  app.use('/posts', router);
 };

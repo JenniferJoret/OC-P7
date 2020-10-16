@@ -2,15 +2,19 @@ import http from "../http-common";
 
 class PostDataService {
   getAll() {
-    return http.get("/AllPosts");
+    return http.get("/posts");
   }
 
   get(id) {
     return http.get(`/posts/${id}`);
   }
 
-  create(data) {
-    return http.post("/posts", data);
+  create(post) {
+    return http.post("/posts", {
+      userId: post.userId,
+      title : post.title,
+      content : post.content
+    });
   }
 
   update(id, data) {
