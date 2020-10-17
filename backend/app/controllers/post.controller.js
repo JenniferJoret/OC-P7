@@ -1,6 +1,8 @@
 const db = require("../models");
 const Post = db.post;
 const User = db.user;
+const Comment = db.comment;
+const Sequelize = db.Sequelize;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Post
@@ -36,21 +38,29 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 
     Post.findAll({
-            order: [
-                ['created_at', 'DESC']
-            ],
-            include: [{
-                model: User
-            }]
-        })
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "Une erreur est survenue pendant la recherche des posts."
-            });
+        order: [
+            ['created_at', 'DESC']
+        ],
+        attributes: { 
+            include: [[Sequelize.fn("COUNT", Sequelize.col("comments.id")), "commentsCount"]] 
+        },
+        include: [{
+            model: Comment, attributes: []
+        },
+        {
+            model: User
+        }],
+        group: ['posts.id']
+    })
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "Une erreur est survenue pendant la recherche des posts."
         });
+    });
+
 };
 
 // Find a single Post with an id

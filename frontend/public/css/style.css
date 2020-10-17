@@ -23,6 +23,11 @@ body {
 hr {
   background-color: #D1515A;
   box-shadow: 0px 1px 2px white;
+  border: 0;
+  clear: both;
+  display: block;
+  width: 96%;
+  height: 1px;
 }
 
 .text-second {

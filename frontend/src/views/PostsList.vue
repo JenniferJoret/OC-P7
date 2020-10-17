@@ -37,7 +37,7 @@
           <div class="dislike btn btn-outline-dark px-2 mx-1 "><button  @click="dislike(post.id)"><i
                 class="fas fa-thumbs-down pr-1"></i>{{ getCountLikes(post.usersDisliked) }}</button></div>
           <div class="comments btn btn-outline-dark px-2 mx-4">
-            <router-link :to="'/post/' + post.id">63 commentaires <i class="fas fa-comment-dots pl-1"></i></router-link>
+            <router-link :to="'/post/' + post.id">{{ post.commentsCount }} commentaire(s) <i class="fas fa-comment-dots pl-1"></i></router-link>
             </div>
         </div>
       </article>

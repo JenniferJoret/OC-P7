@@ -7,7 +7,7 @@ import SignUp from './views/SignUp.vue';
 Vue.use(Router);
 
 export const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/home',

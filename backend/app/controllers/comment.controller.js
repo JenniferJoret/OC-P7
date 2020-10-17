@@ -1,5 +1,5 @@
 const db = require("../models");
-const Comment = db.comments;
+const Comment = db.comment;
 const Post = db.post;
 const User = db.user;
 //const Op = db.Sequelize.Op;
@@ -17,14 +17,31 @@ exports.create = (req, res, next) => {
     // Create a Comment
     const comment = {
         user_id: req.body.userId,
-        post_id: req.body.postId,
+        post_id: req.params.id,
         content: req.body.content
     };
 
     // Save Comment in the database
     Comment.create(comment)
         .then(data => {
-            res.send(data);
+
+            Comment.findOne({
+                    where: {
+                        id: data.id
+                    },
+                    include: [{
+                        model: User
+                    }]
+                })
+
+                .then(data => {
+                    res.send(data);
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: "Error retrieving Comment with id=" + id
+                    });
+                });
         })
         .catch(err => {
             res.status(500).send({
@@ -35,19 +52,18 @@ exports.create = (req, res, next) => {
 
 // Retrieve all Comments from one post.
 exports.findAll = (req, res, next) => {
-
-    Comment.findAll(postId, {
-        where: {
-            post_id: postId
-        },
-        order: [
-            ['created_at', 'DESC']
-        ],
-    include: [
-        {model: User},
-        {model: Post}
-    ]
-    })
+    const postId = req.params.id;
+    Comment.findAll({
+            where: {
+                post_id: postId
+            },
+            order: [
+                ['created_at', 'DESC']
+            ],
+            include: [{
+                model: User
+            }]
+        })
         .then(data => {
             res.send(data);
         })
@@ -75,34 +91,42 @@ exports.findOne = (req, res, next) => {
 
 // Update a Comment by the id in the request
 exports.update = (req, res, next) => {
-    const id = req.params.id;
+    console.log(req.body)
+    Comment.findByPk(req.body.commentId)
+        .then(comment => {
+            comment.content = req.body.content;
+            comment.save()
+            res.send(comment);
+        })
 
-    Comment.update(req.body, {
-            where: {
-                id: id
-            }
-        })
-        .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "Comment was updated successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update Comment with id=${id}. Maybe Comment was not found or req.body is empty!`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error updating Comment with id=" + id
-            });
-        });
+
+
+    // Comment.update(req.body, {
+    //         where: {
+    //             id: req.body.commentId
+    //         }
+    //     })
+    //     .then(num => {
+    //         if (num == 1) {
+    //             res.send({
+    //                 message: "Comment was updated successfully."
+    //             });
+    //         } else {
+    //             res.send({
+    //                 message: `Cannot update Comment with id=${id}. Maybe Comment was not found or req.body is empty!`
+    //             });
+    //         }
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send({
+    //             message: "Error updating Comment with id=" + id
+    //         });
+    //     });
 };
 
 // Delete a Comment with the specified id in the request
 exports.delete = (req, res, next) => {
-    const id = req.params.id;
+    const id = req.params.idComment;
 
     Comment.destroy({
             where: {

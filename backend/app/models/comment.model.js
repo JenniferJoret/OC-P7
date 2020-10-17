@@ -1,9 +1,9 @@
 'use strict'
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
   const Comment = sequelize.define('comments', {
     post_id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false
     },
     user_id: {
@@ -11,19 +11,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
   },
     content: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       required: true
     },
     status: {
-      type: DataTypes.ENUM,
+      type: Sequelize.ENUM,
       values: ['approved', 'rejected', 'in review']
     },
     created_at: {
       type: Sequelize.DATE,
       value: sequelize.literal('CURRENT_TIMESTAMP')
     },
-    updated_at:  DataTypes.DATE,
-    deleted_at: DataTypes.DATE
+    updated_at:  Sequelize.DATE,
+    deleted_at: Sequelize.DATE
   }, {
     underscored: true
   });

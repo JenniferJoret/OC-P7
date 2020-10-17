@@ -10,22 +10,22 @@ module.exports = function(app) {
     next();
   });
 
-  // Create a new comment
-  app.post("/api/posts/:id/", posts.create);
+   // Create a new comment
+  app.post("/api/posts/:id/comment", comments.create);
 
-  // Retrieve all Posts
-  app.get("/api/posts/", posts.findAll);
+  // // Retrieve all comment
+  // app.get("/api/posts/", posts.findAll);
 
-  // Retrieve a single Post with id
-  app.get("/api/posts/:id", posts.findOne);
+   // Retrieve a single comment with id
+  app.get("/api/posts/:id/comments", comments.findAll);
 
-  // Update a Post with id
-  app.put("/api/posts/:id", posts.update);
+  // // Update a comment with id
+   app.put("/api/posts/:id/comment", comments.update);
 
-  // Delete a Post with id
-  app.delete("/api/posts/:id", posts.delete);
+   // Delete a comment with id
+   app.delete("/api/posts/:idPost/comment/:idComment", comments.delete);
 
-  // Delete all Posts
-  app.delete("/api/posts/", posts.deleteAll);
+  // // Delete all comment
+  // app.delete("/api/posts/", posts.deleteAll);
 
 };
