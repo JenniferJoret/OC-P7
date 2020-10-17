@@ -32,6 +32,14 @@ class PostDataService {
   findByTitle(title) {
     return http.get(`/posts?title=${title}`);
   }
+
+  likePost(id, data) {
+    return http.put(`/posts/${id}/like`, {
+      like: data.like,
+      userId : data.userId
+    });
+  }
+
 }
 
 export default new PostDataService();

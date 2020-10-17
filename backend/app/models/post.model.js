@@ -12,6 +12,16 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             required: true
         },
+        usersLiked: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+            defaultValue: ""
+        },
+        usersDisliked: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+            defaultValue: ""
+        },
         created_at: {
             type: Sequelize.DATE,
             value: sequelize.literal('CURRENT_TIMESTAMP')

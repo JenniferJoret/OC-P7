@@ -32,11 +32,13 @@
           <p>{{ post.content }}</p>
         </div>
         <div class="counters-line d-flex mx-auto px-4 pb-3">
-          <div class="like btn btn-outline-dark px-2 mx-1"><a href="#"><i class="fas fa-thumbs-up pr-1"></i>21</a>
+          <div class="like btn btn-outline-dark px-2 mx-1"><button :class="liked ? 'liked' : ''" @click="like(post.id)"><i class="fas fa-thumbs-up pr-1"></i>{{ getCountLikes(post.usersLiked) }}</button>
           </div>
-          <div class="dislike btn btn-outline-dark px-2 mx-1 "><a href="#"><i
-                class="fas fa-thumbs-down pr-1"></i>4012</a></div>
-          <div class="comments btn btn-outline-dark px-2 mx-4"><a href="post.html">63 commentaires<i class="fas fa-comment-dots pl-1"></i></a></div>
+          <div class="dislike btn btn-outline-dark px-2 mx-1 "><button  @click="dislike(post.id)"><i
+                class="fas fa-thumbs-down pr-1"></i>{{ getCountLikes(post.usersDisliked) }}</button></div>
+          <div class="comments btn btn-outline-dark px-2 mx-4">
+            <router-link :to="'/post/' + post.id">63 commentaires <i class="fas fa-comment-dots pl-1"></i></router-link>
+            </div>
         </div>
       </article>
       
@@ -77,7 +79,14 @@ export default {
       posts: [],
       currentPost: null,
       currentIndex: -1,
+      liked: false,
+      dislikes: 0
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
   },
   methods: {
     retrievePosts() {
@@ -89,9 +98,68 @@ export default {
     getInterval(date) {
       var interval = moment(date).fromNow();
       return interval
-    }
+    },
+    like(postId) {
+      PostDataService.get(postId)
+        .then(response => {
+          this.currentPost = response.data;
+          const postLikes = this.currentPost.usersLiked;
+          let sendLike = 0;
+          if (!postLikes.includes(this.currentUser.id)) {
+            sendLike = 1;
+            this.liked = true
+          }
+          var data = {
+            userId: this.currentUser.id,
+            like: sendLike
+          }
+          PostDataService.likePost(this.currentPost.id, data)
+            .then(response => {
+              for (var i = 0, len = this.posts.length; i < len; i++) {
+                if (this.posts[i].id == response.data.id) {
+                  this.posts[i].usersDisliked = response.data.usersDisliked;
+                  this.posts[i].usersLiked = response.data.usersLiked;
+                }
+              }
+            })
+        })
+    },
+    dislike(postId) {
+      PostDataService.get(postId)
+        .then(response => {
+          this.currentPost = response.data;
+          const postDislikes = this.currentPost.usersDisliked;
+          let sendLike = 0;
+          if (!postDislikes.includes(this.currentUser.id)) {
+            sendLike = -1;
+            this.disliked = true
+          }
+          var data = {
+            userId: this.currentUser.id,
+            like: sendLike
+          }
+          PostDataService.likePost(this.currentPost.id, data)
+            .then(response => {
+              for (var i = 0, len = this.posts.length; i < len; i++) {
+                if (this.posts[i].id == response.data.id) {
+                  this.posts[i].usersDisliked = response.data.usersDisliked;
+                  this.posts[i].usersLiked = response.data.usersLiked;
+                }
+              }
+            })
+        })
+    },
+
+    getCountLikes(str) {
+      let likes = str.split(',');
+      likes = likes.length;
+      return likes - 1
+    },
+
+
+
   },
-  
+
   mounted() {
     this.retrievePosts();
   }

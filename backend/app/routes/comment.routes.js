@@ -1,5 +1,5 @@
 const { authJwt } = require("../middleware");
-const posts = require("../controllers/post.controller");
+const comments = require("../controllers/comment.controller");
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -10,8 +10,8 @@ module.exports = function(app) {
     next();
   });
 
-  // Create a new Post
-  app.post("/api/posts/", posts.create);
+  // Create a new comment
+  app.post("/api/posts/:id/", posts.create);
 
   // Retrieve all Posts
   app.get("/api/posts/", posts.findAll);
@@ -21,9 +21,6 @@ module.exports = function(app) {
 
   // Update a Post with id
   app.put("/api/posts/:id", posts.update);
-
-  // Update a Post with like
-  app.put("/api/posts/:id/like", posts.likePost);
 
   // Delete a Post with id
   app.delete("/api/posts/:id", posts.delete);

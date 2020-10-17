@@ -36,12 +36,12 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 
     Post.findAll({
-        order: [
+            order: [
                 ['created_at', 'DESC']
             ],
-        include: [
-            {model: User}
-        ]
+            include: [{
+                model: User
+            }]
         })
         .then(data => {
             res.send(data);
@@ -142,3 +142,58 @@ exports.deleteAll = (req, res) => {
             });
         });
 };
+
+exports.likePost = (req, res, next) => {
+    const id = req.params.id;
+    const like = req.body.like;
+    Post.findByPk(id, {
+        include: [{
+            model: User
+        }]
+    }).then(post => {
+        const likes = post.usersLiked.split(',');
+        const dislikes = post.usersDisliked.split(',');
+        if (like == 1) {
+        console.log('Vote positif !')
+        likes.push(req.body.userId);
+        const strLikes = likes.join();
+        post.usersLiked = strLikes;
+        if (dislikes.includes(req.body.userId.toString())) {
+            dislikes.splice(dislikes.indexOf(req.body.userId.toString()), 1)
+            const strLikes = dislikes.join();
+            post.usersDisliked = strLikes;
+        }
+        post.save()
+        res.send(post);
+        } else if (like == 0) {
+
+            if (likes.includes(req.body.userId.toString())) {
+                likes.splice(likes.indexOf(req.body.userId.toString()), 1)
+                const strLikes = likes.join();
+                post.usersLiked = strLikes;
+            }
+            if (dislikes.includes(req.body.userId.toString())) {
+                dislikes.splice(dislikes.indexOf(req.body.userId.toString()), 1)
+                const strLikes = dislikes.join();
+                post.usersDisliked = strLikes;
+            }
+            post.save()
+            res.send(post);
+            console.log('Vote réinitialisé !')
+        } else if (like == -1) {
+            if (likes.includes(req.body.userId.toString())) {
+                likes.splice(likes.indexOf(req.body.userId.toString()), 1)
+                const strLikes = likes.join();
+                post.usersLiked = strLikes;
+            }
+            console.log('Vote positif !')
+            const dislikes = post.getDataValue('usersDisliked').split(',');
+            dislikes.push(req.body.userId);
+            const strDislikes = dislikes.toString();
+            post.usersDisliked = strDislikes;
+            post.save()
+            res.send(post);
+        }
+    })
+}
+

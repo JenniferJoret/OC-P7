@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         created_at: {
             type: Sequelize.DATE,
-            value: sequelize.fn('NOW')
+            value: sequelize.literal('CURRENT_TIMESTAMP')
         }
     }, {
         underscored: true

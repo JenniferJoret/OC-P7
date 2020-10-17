@@ -39,6 +39,10 @@ hr {
   height: 80vh;
 }
 
+.liked {
+  background-color: red;
+}
+
 .navbar {
   border-bottom: 5px solid #D1515A;
   background-color: #0A1F43;
