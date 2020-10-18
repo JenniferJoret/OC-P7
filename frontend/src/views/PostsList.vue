@@ -32,9 +32,9 @@
           <p>{{ post.content }}</p>
         </div>
         <div class="counters-line d-flex mx-auto px-4 pb-3">
-          <div class="like btn btn-outline-dark px-2 mx-1"><button :class="liked ? 'liked' : ''" @click="like(post.id)"><i class="fas fa-thumbs-up pr-1"></i>{{ getCountLikes(post.usersLiked) }}</button>
+          <div class="like btn btn-outline-dark px-2 mx-1"><button :class="post.liked ? 'active' : ''" @click="like(post.id)"><i class="fas fa-thumbs-up pr-1"></i>{{ getCountLikes(post.usersLiked) }}</button>
           </div>
-          <div class="dislike btn btn-outline-dark px-2 mx-1 "><button  @click="dislike(post.id)"><i
+          <div class="dislike btn btn-outline-dark px-2 mx-1 "><button :class="post.disliked ? 'active' : ''" @click="dislike(post.id)"><i
                 class="fas fa-thumbs-down pr-1"></i>{{ getCountLikes(post.usersDisliked) }}</button></div>
           <div class="comments btn btn-outline-dark px-2 mx-4">
             <router-link :to="'/post/' + post.id">{{ post.commentsCount }} commentaire(s) <i class="fas fa-comment-dots pl-1"></i></router-link>
@@ -78,9 +78,7 @@ export default {
     return {
       posts: [],
       currentPost: null,
-      currentIndex: -1,
-      liked: false,
-      dislikes: 0
+      currentIndex: -1
     };
   },
   computed: {
@@ -92,6 +90,17 @@ export default {
     retrievePosts() {
       PostDataService.getAll()
         .then(response => {
+          response.data.forEach(
+            element => {
+              if (element.usersDisliked.includes(this.currentUser.id)) {
+            element.liked = false
+            element.disliked = true
+          } else if (element.usersLiked.includes(this.currentUser.id)) {
+            element.liked = true
+            element.disliked = false
+          }
+            }
+          )
           this.posts = response.data;
         })
     },
@@ -107,7 +116,6 @@ export default {
           let sendLike = 0;
           if (!postLikes.includes(this.currentUser.id)) {
             sendLike = 1;
-            this.liked = true
           }
           var data = {
             userId: this.currentUser.id,
@@ -119,10 +127,16 @@ export default {
                 if (this.posts[i].id == response.data.id) {
                   this.posts[i].usersDisliked = response.data.usersDisliked;
                   this.posts[i].usersLiked = response.data.usersLiked;
+                  if (this.posts[i].usersLiked.includes(this.currentUser.id)) {
+                    this.posts[i].liked = true
+                    this.posts[i].disliked = false
+                  } else {
+                    this.posts[i].liked = false
+                  }
                 }
               }
             })
-        })
+          })
     },
     dislike(postId) {
       PostDataService.get(postId)
@@ -132,7 +146,6 @@ export default {
           let sendLike = 0;
           if (!postDislikes.includes(this.currentUser.id)) {
             sendLike = -1;
-            this.disliked = true
           }
           var data = {
             userId: this.currentUser.id,
@@ -144,6 +157,12 @@ export default {
                 if (this.posts[i].id == response.data.id) {
                   this.posts[i].usersDisliked = response.data.usersDisliked;
                   this.posts[i].usersLiked = response.data.usersLiked;
+                  if (this.posts[i].usersDisliked.includes(this.currentUser.id)) {
+                    this.posts[i].liked = false
+                    this.posts[i].disliked = true
+                  } else {
+                    this.posts[i].disliked = false
+                  }
                 }
               }
             })

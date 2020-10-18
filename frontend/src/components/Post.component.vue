@@ -15,7 +15,7 @@
           </div>
           <div class="d-flex">
             <button  v-if="post.userId === currentUser.id" class="mx-2 edit-delete" @click="editPost(post)"><i class="fas fa-edit pr-1"></i></button>
-            <button  v-if="post.userId === currentUser.id || isAdmin" class="mx-2 edit-delete" @click="deletePost()"><i class="fas fa-trash-alt pr-1"></i></button>
+            <button  v-if="post.userId === currentUser.id || isAdmin()" class="mx-2 edit-delete" @click="deletePost()"><i class="fas fa-trash-alt pr-1"></i></button>
           </div>
         </div>
       </div>
@@ -31,10 +31,10 @@
         <p v-else>{{ post.content }}</p>
       </div>
       <div class="counters-line d-flex mx-auto px-4 pb-3">
-        <div class="like btn btn-outline-dark px-2 mx-1"><button :class="liked ? 'liked' : ''" @click="like(post.id)"><i
+        <div class="like btn btn-outline-dark px-2 mx-1"><button :class="liked ? 'active' : ''" @click="like(post.id)"><i
               class="fas fa-thumbs-up pr-1"></i>{{ getCountLikes(post.usersLiked) }}</button>
         </div>
-        <div class="dislike btn btn-outline-dark px-2 mx-1 "><button @click="dislike(post.id)"><i
+        <div class="dislike btn btn-outline-dark px-2 mx-1 "><button :class="disliked ? 'active' : ''" @click="dislike(post.id)"><i
               class="fas fa-thumbs-down pr-1"></i>{{ getCountLikes(post.usersDisliked) }}</button></div>
         <div class="comments btn btn-outline-dark px-2 mx-4">
           <router-link :to="'/post/' + post.id">{{ commentsCount }} commentaires<i class="fas fa-comment-dots pl-1"></i></router-link>
@@ -55,7 +55,8 @@ export default {
   data() {
     return {
       post: null,
-      liked: false
+      liked: false,
+      disliked: false
     };
   },
   computed: {
@@ -73,11 +74,18 @@ export default {
         .then(response => {
           response.data.isEditing = false;
           this.post = response.data;
+          if (this.post.usersDisliked.includes(this.currentUser.id)) {
+            this.liked = false
+            this.disliked = true
+          } else if (this.post.usersLiked.includes(this.currentUser.id)) {
+            this.liked = true
+            this.disliked = false
+          }
         })
         .catch(e => {
           console.log(e);
         });
-    },
+      },
     getInterval(date) {
       var interval = moment(date).fromNow();
       return interval
@@ -91,6 +99,9 @@ export default {
           if (!postLikes.includes(this.currentUser.id)) {
             sendLike = 1;
             this.liked = true
+            this.disliked = false
+          }else{
+            this.liked = false
           }
           var data = {
             userId: this.currentUser.id,
@@ -111,7 +122,10 @@ export default {
           let sendLike = 0;
           if (!postDislikes.includes(this.currentUser.id)) {
             sendLike = -1;
+            this.liked = false
             this.disliked = true
+          }else{
+            this.disliked = false
           }
           var data = {
             userId: this.currentUser.id,
@@ -152,12 +166,13 @@ export default {
       });
     },
     isAdmin() {
-                if (this.currentUser && this.currentUser.roles) {
-                    return this.currentUser.roles.includes('ROLE_ADMIN');
-                }
+      if (this.currentUser && this.currentUser.roles) {
+        console.log(this.currentUser.roles)
+        return this.currentUser.roles.includes('ROLE_ADMIN');
+      }
 
-                return false;
-            },
+      return false;
+    },
   },
 
   mounted() {

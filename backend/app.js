@@ -37,7 +37,6 @@ db.sequelize.sync();
 
 // routes
 require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
 require('./app/routes/post.routes')(app);
 require('./app/routes/comment.routes')(app);
 

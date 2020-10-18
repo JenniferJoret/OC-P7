@@ -3,7 +3,6 @@ const Post = db.post;
 const User = db.user;
 const Comment = db.comment;
 const Sequelize = db.Sequelize;
-const Op = db.Sequelize.Op;
 
 // Create and Save a new Post
 exports.create = (req, res) => {

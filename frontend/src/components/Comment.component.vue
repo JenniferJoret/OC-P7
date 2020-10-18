@@ -23,7 +23,7 @@
                     </div>
                     <div class="d-flex flex-column ">
                         <button v-if="comment.userId === currentUser.id" class="mx-2 edit-delete" @click="editComment(comment)"><i class="fas fa-edit pr-1"></i></button>
-                        <button v-if="comment.userId === currentUser.id || isAdmin" class="mx-2 edit-delete" @click="deleteComment(comment)"><i class="fas fa-trash-alt pr-1"></i></button>
+                        <button v-if="comment.userId === currentUser.id || isAdmin()" class="mx-2 edit-delete" @click="deleteComment(comment)"><i class="fas fa-trash-alt pr-1"></i></button>
                     </div>
 
                 </div>
