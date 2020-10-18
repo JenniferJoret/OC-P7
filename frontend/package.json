@@ -18,6 +18,7 @@
     "core-js": "^2.6.5",
     "jquery": "^3.5.1",
     "popper.js": "^1.15.0",
+    "rfs": "^9.0.3",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.12",
     "vue-moment": "^4.1.0",

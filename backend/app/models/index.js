@@ -4,14 +4,13 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
   process.env.DATABASE_NAME,
   process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
-  {
+  process.env.DATABASE_PASSWORD, {
     host: process.env.DATABASE_HOST,
     dialect: process.env.DATABASE_DIALECT,
     dialectOptions: {
       useUTC: true, //for reading from database
       dateStrings: true,
-      charset: 'utf8mb4',//gestion smileys et caractères spéciaux
+      charset: 'utf8mb4', //gestion smileys et caractères spéciaux
     },
     timezone: 'Europe/Paris',
     operatorsAliases: false,

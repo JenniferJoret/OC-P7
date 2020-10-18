@@ -1,5 +1,8 @@
-@import"utils/variables";
-@import"base/base";
-@import"layout/header";
-@import"layout/footer";
-@import"pages/home";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/rfs/scss";
+@import "utils/variables";
+@import "utils/font-responsive";
+@import "base/base";
+@import "layout/header";
+@import "layout/footer";
+@import "pages/home";

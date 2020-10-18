@@ -9,20 +9,16 @@ module.exports = (sequelize, Sequelize) => {
     user_id: {
       type: Sequelize.INTEGER,
       allowNull: false
-  },
+    },
     content: {
       type: Sequelize.TEXT,
       required: true
-    },
-    status: {
-      type: Sequelize.ENUM,
-      values: ['approved', 'rejected', 'in review']
     },
     created_at: {
       type: Sequelize.DATE,
       value: sequelize.literal('CURRENT_TIMESTAMP')
     },
-    updated_at:  Sequelize.DATE,
+    updated_at: Sequelize.DATE,
     deleted_at: Sequelize.DATE
   }, {
     underscored: true

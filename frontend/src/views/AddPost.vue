@@ -9,7 +9,7 @@
 
       <div class="form-group">
         <label for="content">Contenu</label>
-        <input class="form-control" id="content" required v-model="post.content" name="content" />
+        <textarea class="form-control" id="content" required v-model="post.content" name="content"></textarea>
       </div>
 
       <button @click="savePost" class="btn btn-success">Poster !</button>

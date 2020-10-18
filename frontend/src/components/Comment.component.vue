@@ -1,39 +1,46 @@
 <template>
-    <div class=" bg-t-white col-xl-6 mx-auto">
-        <div>
+    <div class="bg-t-white col-xl-6 mx-auto mb-5 ">
+        <!-- AJOUT COMMENTAIRE -->
+        <div class="d-flex flex-column">
             <p class="h3 text-center col-12 mx-auto py-4">Ajouter un commentaire</p>
-            
-            <div class="form-group d-flex justify-content-around pb-3">
-                <input class="form-control col-9" id="content" required v-model="comment.content" name="content" />
-                <button @click="saveComment" class="btn btn-success col-2">Poster !</button>
+            <div class="form-group d-flex flex-column  flex-md-row justify-content-md-around pb-3">
+                <input class="form-control col-10 col-md-9 mx-auto" id="content" required v-model="comment.content"
+                    name="content" />
+                <button @click="saveComment" class="btn btn-success mt-3 mt-md-0 col-10 col-md-2 mx-auto">Poster
+                    !</button>
             </div>
         </div>
         <hr>
-        <section class="d-flex flex-column py-2 comment" v-for="(comment, index) in comments"
-            :key="index">
+        <!-- COMMENTAIRES -->
+        <section class="d-flex flex-column py-2 comment" v-for="(comment, index) in comments" :key="index">
             <div class="px-4 pt-3">
                 <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row ">
-                        <div class="px-2">
-                            <p><i class="far fa-clock pr-1"></i> Posté {{ getInterval(comment.created_at) }}</p>
-                        </div>
-                        <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a
-                                >{{ comment.user.firstName +' ' + comment.user.lastName }}</a>
-                        </div>
+                    <!-- DATE/UTILISATEUR -->
+                    <div class="d-flex flex-column flex-md-row text-left">
+                        <p class="date px-md-2 mb-0"><span class="far fa-clock pr-1"></span>Posté
+                            {{ getInterval(comment.created_at) }}</p>
+                        <p class="user px-md-2 mb-0"><span
+                                class="fas fa-user-circle pr-1"></span>{{ comment.user.firstName + ' ' + comment.user.lastName }}
+                        </p>
                     </div>
-                    <div class="d-flex flex-column ">
-                        <button v-if="comment.userId === currentUser.id" class="mx-2 edit-delete" @click="editComment(comment)"><i class="fas fa-edit pr-1"></i></button>
-                        <button v-if="comment.userId === currentUser.id || isAdmin()" class="mx-2 edit-delete" @click="deleteComment(comment)"><i class="fas fa-trash-alt pr-1"></i></button>
+                    <!-- BOUTONS EDITER/SUPPRIMER -->
+                    <div class="d-flex flex-column flex-md-row">
+                        <button v-if="comment.userId === currentUser.id" class="mx-2 edit-delete"
+                            @click="editComment(comment)"><span class="fas fa-edit pr-1"></span> </button>
+                        <button v-if="comment.userId === currentUser.id || isAdmin()" class="mx-2 edit-delete"
+                            @click="deleteComment(comment)"><span class="fas fa-trash-alt pr-1"></span> </button>
                     </div>
-
                 </div>
-                <div class="d-flex px-4 m-auto col-12 justify-content-between">
-                    <div class="d-flex flex-row col-9 mx-auto" v-if="comment.isEditing">
-                        <input class="form-control" id="content" required v-model="comment.content" name="content" value="{}" />
-                        <button @click="updateComment(comment)" class="btn btn-success col-2 mx-auto">Mettre à jour !</button>
+                <!-- EDITION COMMENTAIRE -->
+                <div class="px-4">
+                    <div class="d-flex flex-column col-12 mx-auto" v-if="comment.isEditing">
+                        <textarea class="form-control" id="content" required v-model="comment.content" name="content"
+                            value="{}"></textarea>
+                        <button @click="updateComment(comment)" class="btn btn-success mx-auto my-3">Mettre à jour
+                            !</button>
                     </div>
-                    
-                    <p v-else>{{ comment.content }}</p>
+                    <!-- CONTENU COMMENTAIRE -->
+                    <p v-else class="mx-auto text-md-justify post-content">{{ comment.content }}</p>
                 </div>
             </div>
             <hr>

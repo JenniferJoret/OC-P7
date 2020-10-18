@@ -8,39 +8,73 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between
 }
-#app{
+
+#app {
   margin-top: 12vh;
+  position: relative;
+  min-height: 8vh;
 }
+
 //changer la couleur lors du surlignage
 ::selection {
   background: $gpmMainColor;
   color: white;
 }
-hr{
+
+a {
+  &.h2 {
+    color: $gpmMainColor;
+  }
+
+  &:hover {
+    color: $gpmSecondColor !important;
+  }
+}
+
+hr {
   background-color: $gpmSecondColor;
   box-shadow: 0px 1px 2px white;
   border: 0;
-  clear:both;
-  display:block;
-  width: 96%;               
+  clear: both;
+  display: block;
+  width: 96%;
   height: 1px;
 }
-.text-second{
-color: $gpmSecondColor;
+
+.text-second {
+  color: $gpmSecondColor;
 }
-.bg-t-white{
+
+.bg-t-white {
   background-color: rgba($color: #fff, $alpha: .9);
   border-radius: 10px;
 }
-.m-align{
+
+.m-align {
   display: flex;
   height: 80vh;
 }
-.active{
-  background-color: red;
+
+.active,
+.comment-link {
+  background-color: $gpmMainColor !important;
+  color: #fff !important;
+
+  & span {
+    color: $gpmSecondColor;
+  }
 }
-.edit-delete{
+
+.edit-delete {
   border: none;
   background-color: transparent;
+}
+
+button {
+  border: none;
 }

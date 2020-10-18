@@ -5,5 +5,3 @@ exports.userConnect = (req, res) => {
 exports.adminConnect = (req, res) => {
   res.status(200);
 };
-
-

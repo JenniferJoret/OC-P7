@@ -1,5 +1,5 @@
 <template>
-  <div id="listPosts" class="d-flex flex-column flex-wrap col-12">
+  <section id="listPosts" class="d-flex flex-column flex-wrap col-12 mt-3">
     <div class="bg-main-color p-4 info-fixed --left d-none d-xl-block">
       <h2 class="actus text-white text-center pb-4">Dernières actualités chez <span
           class="text-second">Groupomania</span> </h2>
@@ -17,35 +17,41 @@
     </div>
     <h1 class="bg-t-white px-5 py-3 w-100 text-center text-second col-xl-6 mx-auto">Fil d'actualité</h1>
 
-    <section class="articles d-flex w-100 flex-column align-items-center mb-5 py-2 col-xl-6 mx-auto">
-      <article class="main-post bg-t-white m-4 d-table" v-for="(post, index) in posts" :key="index">
-        <div class="post-content mx-auto text-center px-4 pt-3">
-          <router-link class="h2"  :to="'/post/' + post.id">{{ post.title }}</router-link>
+    <section class="articles d-flex w-100 flex-column align-items-center mb-5 py-2 px-0 col-xl-6 mx-auto">
+      <article class="bg-t-white p-3 my-3 d-table w-100" v-for="(post, index) in posts" :key="index">
+        <div class="mx-auto text-center px-md-4 pt-3">
+          <!-- TITRE POST -->
+          <router-link class="h2" :to="'/post/' + post.id">{{ post.title }}</router-link>
           <hr>
-          <div class="d-flex">
-            <div class="date px-2"><p><i class="far fa-clock pr-1"></i> Posté {{ getInterval(post.created_at) }}</p></div>
-            <div class="user px-2"><i class="fas fa-user-circle pr-1"></i><a href="profile.html">{{ post.user.firstName +' ' + post.user.lastName }}</a>
-            </div>
+          <!-- DATE/UTILISATEUR -->
+          <div class="d-flex flex-column flex-md-row text-left">
+            <p class="date px-md-2 mb-0"><span class="far fa-clock pr-1"></span>  Posté {{ getInterval(post.created_at) }}</p>
+            <p class="user px-md-2 mb-0"><span class="fas fa-user-circle pr-1"></span>{{ post.user.firstName +' ' + post.user.lastName }}</p>
           </div>
+          <hr>
         </div>
-        <div class="d-flex justify-content-center px-4">
-          <p>{{ post.content }}</p>
-        </div>
-        <div class="counters-line d-flex mx-auto px-4 pb-3">
-          <div class="like btn btn-outline-dark px-2 mx-1"><button :class="post.liked ? 'active' : ''" @click="like(post.id)"><i class="fas fa-thumbs-up pr-1"></i>{{ getCountLikes(post.usersLiked) }}</button>
-          </div>
-          <div class="dislike btn btn-outline-dark px-2 mx-1 "><button :class="post.disliked ? 'active' : ''" @click="dislike(post.id)"><i
-                class="fas fa-thumbs-down pr-1"></i>{{ getCountLikes(post.usersDisliked) }}</button></div>
-          <div class="comments btn btn-outline-dark px-2 mx-4">
-            <router-link :to="'/post/' + post.id">{{ post.commentsCount }} commentaire(s) <i class="fas fa-comment-dots pl-1"></i></router-link>
+        <!-- CONTENU POST -->
+          <p class="mx-auto text-md-justify px-3 px-md-5 post-content">{{ post.content }}</p>
+          <!-- BOUTONS LIKE ET DISLIKE -->
+        <div class="d-flex flex-column flex-md-row mx-auto px-lg-4 pb-3">
+          <div class="d-flex mx-auto mx-md-4">
+              <button class="btn btn-outline-dark px-2 mx-1" :class="post.liked ? 'active' : ''"
+            @click="like(post.id)"><span class="fas fa-thumbs-up pr-1"></span>
+            {{ getCountLikes(post.usersLiked) }}</button>
+            <button class="btn btn-outline-dark px-2 mx-1 " :class="post.disliked ? 'active' : ''"
+            @click="dislike(post.id)"><span class="fas fa-thumbs-down pr-1"></span>
+            {{ getCountLikes(post.usersDisliked) }}</button>
             </div>
+            <!-- BOUTON COMMENTAIRES -->
+            <router-link class="d-flex mx-auto mx-md-4 comment-link btn btn-outline-dark mt-3 mt-md-0" :to="'/post/' + post.id">
+            {{ post.commentsCount }} commentaire(s) <span class="fas fa-comment-dots pl-1"></span> </router-link>
         </div>
       </article>
-      
-<span class="bg-t-white px-5 py-3 w-100 text-center">Il n'y a plus rien à afficher !</span>
+
+      <span class="bg-t-white px-5 py-3 w-100 text-center">Il n'y a plus rien à afficher !</span>
     </section>
 
-<div class=" bg-main-color p-4 info-fixed --right d-none d-xl-block">
+    <div class=" bg-main-color p-4 info-fixed --right d-none d-xl-block">
       <h2 class="actus text-white text-center pb-4">Dernières actualités chez <span
           class="text-second">Groupomania</span> </h2>
       <hr>
@@ -61,7 +67,7 @@
       </div>
 
     </div>
-  </div>
+  </section>
   <!--End #main -->
 </template>
 

@@ -37,28 +37,32 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 
     Post.findAll({
-        order: [
-            ['created_at', 'DESC']
-        ],
-        attributes: { 
-            include: [[Sequelize.fn("COUNT", Sequelize.col("comments.id")), "commentsCount"]] 
-        },
-        include: [{
-            model: Comment, attributes: []
-        },
-        {
-            model: User
-        }],
-        group: ['posts.id']
-    })
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: err.message || "Une erreur est survenue pendant la recherche des posts."
+            order: [
+                ['created_at', 'DESC']
+            ],
+            attributes: {
+                include: [
+                    [Sequelize.fn("COUNT", Sequelize.col("comments.id")), "commentsCount"]
+                ]
+            },
+            include: [{
+                    model: Comment,
+                    attributes: []
+                },
+                {
+                    model: User
+                }
+            ],
+            group: ['posts.id']
+        })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Une erreur est survenue pendant la recherche des posts."
+            });
         });
-    });
 
 };
 
@@ -84,23 +88,23 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
     Post.findByPk(id)
-    .then(post => {
-        post.title = req.body.title;
-        post.content = req.body.content;
-        post.save()
-        res.send(post);
-    })
+        .then(post => {
+            post.title = req.body.title;
+            post.content = req.body.content;
+            post.save()
+            res.send(post);
+        })
 };
 
 // Delete a Post with the specified id in the request
 exports.delete = (req, res, next) => {
-        const id = req.params.id;
-        Comment.destroy({
-            where: {
-                post_id: id
-            }
-        });
-        Post.destroy({
+    const id = req.params.id;
+    Comment.destroy({
+        where: {
+            post_id: id
+        }
+    });
+    Post.destroy({
             where: {
                 id: id
             }
@@ -152,17 +156,17 @@ exports.likePost = (req, res, next) => {
         const likes = post.usersLiked.split(',');
         const dislikes = post.usersDisliked.split(',');
         if (like == 1) {
-        console.log('Vote positif !')
-        likes.push(req.body.userId);
-        const strLikes = likes.join();
-        post.usersLiked = strLikes;
-        if (dislikes.includes(req.body.userId.toString())) {
-            dislikes.splice(dislikes.indexOf(req.body.userId.toString()), 1)
-            const strLikes = dislikes.join();
-            post.usersDisliked = strLikes;
-        }
-        post.save()
-        res.send(post);
+            console.log('Vote positif !')
+            likes.push(req.body.userId);
+            const strLikes = likes.join();
+            post.usersLiked = strLikes;
+            if (dislikes.includes(req.body.userId.toString())) {
+                dislikes.splice(dislikes.indexOf(req.body.userId.toString()), 1)
+                const strLikes = dislikes.join();
+                post.usersDisliked = strLikes;
+            }
+            post.save()
+            res.send(post);
         } else if (like == 0) {
 
             if (likes.includes(req.body.userId.toString())) {
@@ -194,4 +198,3 @@ exports.likePost = (req, res, next) => {
         }
     })
 }
-
