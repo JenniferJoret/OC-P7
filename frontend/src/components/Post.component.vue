@@ -13,9 +13,9 @@
                 href="profile.html">{{ post.user.firstName +' ' + post.user.lastName }}</a>
             </div>
           </div>
-          <div v-if="post.userId === currentUser.id" class="d-flex">
-            <button class="mx-2 edit-delete" @click="editPost(post)"><i class="fas fa-edit pr-1"></i></button>
-            <button class="mx-2 edit-delete" @click="deletePost()"><i class="fas fa-trash-alt pr-1"></i></button>
+          <div class="d-flex">
+            <button  v-if="post.userId === currentUser.id" class="mx-2 edit-delete" @click="editPost(post)"><i class="fas fa-edit pr-1"></i></button>
+            <button  v-if="post.userId === currentUser.id || isAdmin" class="mx-2 edit-delete" @click="deletePost()"><i class="fas fa-trash-alt pr-1"></i></button>
           </div>
         </div>
       </div>
@@ -68,6 +68,7 @@ export default {
   },
   methods: {
     getPost(id) {
+      console.log(this.currentUser)
       PostDataService.get(id)
         .then(response => {
           response.data.isEditing = false;
@@ -150,6 +151,13 @@ export default {
         this.$router.push('/posts');
       });
     },
+    isAdmin() {
+                if (this.currentUser && this.currentUser.roles) {
+                    return this.currentUser.roles.includes('ROLE_ADMIN');
+                }
+
+                return false;
+            },
   },
 
   mounted() {

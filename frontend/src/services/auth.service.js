@@ -28,6 +28,11 @@ class AuthService {
       password: user.password
     });
   }
+
+  delete(id) {
+    console.log("service : " + id);
+    return http.delete(`/auth/delete/${id}`);
+  }
 }
 
 export default new AuthService();

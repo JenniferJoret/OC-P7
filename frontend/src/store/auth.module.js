@@ -36,6 +36,13 @@ export const auth = {
           return Promise.reject(error);
         }
       );
+    },
+    delete({ commit }, id) {
+      return AuthService.delete(id).then(
+        () => {
+          commit('deleted');
+        }
+      );
     }
   },
   mutations: {
@@ -56,6 +63,10 @@ export const auth = {
     },
     registerFailure(state) {
       state.status.loggedIn = false;
-    }
+    },
+    deleted(state) {
+      state.status.loggedIn = false;
+      state.user = null;
+    },
   }
 };

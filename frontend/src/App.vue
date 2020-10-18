@@ -26,15 +26,6 @@
                             <font-awesome-icon icon="edit" /> Ajouter un post
                         </router-link>
                     </li>
-                    <li v-if="showAdminBoard" class="nav-item">
-                        <router-link to="/admin" class="nav-link">Administration</router-link>
-                    </li>
-                    <li v-if="showModeratorBoard" class="nav-item">
-                        <router-link to="/mod" class="nav-link">Modération</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link v-if="currentUser" to="/user" class="nav-link">Utilisateur</router-link>
-                    </li>
                     <div v-if="!currentUser" class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <router-link to="/signUp" class="nav-link">
@@ -72,20 +63,6 @@
             currentUser() {
                 return this.$store.state.auth.user;
             },
-            showAdminBoard() {
-                if (this.currentUser && this.currentUser.roles) {
-                    return this.currentUser.roles.includes('ROLE_ADMIN');
-                }
-
-                return false;
-            },
-            showModeratorBoard() {
-                if (this.currentUser && this.currentUser.roles) {
-                    return this.currentUser.roles.includes('ROLE_MODERATOR');
-                }
-
-                return false;
-            }
         },
         methods: {
             logOut() {

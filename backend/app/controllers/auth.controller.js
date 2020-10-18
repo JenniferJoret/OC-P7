@@ -1,4 +1,6 @@
 const db = require("../models");
+const Comment = db.comment;
+const Post = db.post
 const User = db.user;
 const Role = db.role;
 
@@ -26,11 +28,11 @@ var bcrypt = require("bcrypt");
 exports.signup = (req, res) => {
   // Save User to Database
   User.create({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
-  })
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8)
+    })
     .then(user => {
       if (req.body.roles) {
         Role.findAll({
@@ -41,18 +43,24 @@ exports.signup = (req, res) => {
           }
         }).then(roles => {
           user.setRoles(roles).then(() => {
-            res.send({ message: "User registered successfully!" });
+            res.send({
+              message: "User registered successfully!"
+            });
           });
         });
       } else {
         // user role = 1
         user.setRoles([1]).then(() => {
-          res.send({ message: "Inscription réussie !" });
+          res.send({
+            message: "Inscription réussie !"
+          });
         }).then(user => {
-          var token = jwt.sign({ id: user.id }, process.env.TOKEN_KEY, {
+          var token = jwt.sign({
+            id: user.id
+          }, process.env.TOKEN_KEY, {
             expiresIn: 86400 // 24 hours
           });
-    
+
           var authorities = [];
           user.getRoles().then(roles => {
             for (let i = 0; i < roles.length; i++) {
@@ -72,19 +80,23 @@ exports.signup = (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).send({ message: err.message });
+      res.status(500).send({
+        message: err.message
+      });
     });
 };
 
 exports.signin = (req, res) => {
   User.findOne({
-    where: {
-      email: req.body.email
-    }
-  })
+      where: {
+        email: req.body.email
+      }
+    })
     .then(user => {
       if (!user) {
-        return res.status(404).send({ message: "Il n'y a personne d'inscrit avec cette adresse mail." });
+        return res.status(404).send({
+          message: "Il n'y a personne d'inscrit avec cette adresse mail."
+        });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -99,7 +111,9 @@ exports.signin = (req, res) => {
         });
       }
 
-      var token = jwt.sign({ id: user.id }, process.env.TOKEN_KEY, {
+      var token = jwt.sign({
+        id: user.id
+      }, process.env.TOKEN_KEY, {
         expiresIn: 86400 // 24 hours
       });
 
@@ -119,6 +133,52 @@ exports.signin = (req, res) => {
       });
     })
     .catch(err => {
-      res.status(500).send({ message: err.message });
+      res.status(500).send({
+        message: err.message
+      });
     });
+};
+
+
+// Delete a user with the specified id in the request
+exports.delete = (req, res, next) => {
+  Comment.destroy({
+    where: {
+      user_id: req.params.id
+    }
+  });
+  Post.findAll({
+      where: {
+        user_id: req.params.id
+      }
+    })
+    .then(response => {
+      response.forEach(element => {
+        Comment.destroy({
+          where: {
+            post_id: element.id
+          }
+        })
+      });
+      Post.destroy({
+        where: {
+          user_id: req.params.id
+        }
+      });
+      User.destroy({
+          where: {
+            id: req.params.id
+          }
+        })
+        .then(() => {
+          res.send({
+            message: "L'utilisateur a bien été supprimé !"
+          });
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: "Impossible de supprimer l'utilisateur avec l'id=" + id
+          });
+        });
+    })
 };

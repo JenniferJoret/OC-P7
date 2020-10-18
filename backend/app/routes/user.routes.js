@@ -16,9 +16,7 @@
 //     // Update a user with id
 //     router.put("/:id", users.update);
   
-//     // Delete a user with id
-//     router.delete("/:id", users.delete);
-  
+
 //     app.use('/api/users', router);
 //   };
 
@@ -39,18 +37,13 @@ module.exports = function(app) {
   app.get(
     "/user",
     [authJwt.verifyToken],
-    user.userBoard
-  );
-
-  app.get(
-    "/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    user.moderatorBoard
+    user.userConnect
   );
 
   app.get(
     "/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
-    user.adminBoard
+    user.adminConnect
   );
+
 };

@@ -21,9 +21,9 @@
                                 >{{ comment.user.firstName +' ' + comment.user.lastName }}</a>
                         </div>
                     </div>
-                    <div v-if="comment.userId === currentUser.id" class="d-flex flex-column ">
-                        <button class="mx-2 edit-delete" @click="editComment(comment)"><i class="fas fa-edit pr-1"></i></button>
-                        <button class="mx-2 edit-delete" @click="deleteComment(comment)"><i class="fas fa-trash-alt pr-1"></i></button>
+                    <div class="d-flex flex-column ">
+                        <button v-if="comment.userId === currentUser.id" class="mx-2 edit-delete" @click="editComment(comment)"><i class="fas fa-edit pr-1"></i></button>
+                        <button v-if="comment.userId === currentUser.id || isAdmin" class="mx-2 edit-delete" @click="deleteComment(comment)"><i class="fas fa-trash-alt pr-1"></i></button>
                     </div>
 
                 </div>
@@ -113,6 +113,13 @@ export default {
                     comment.isEditing = false;
                 })
         },
+            isAdmin() {
+                if (this.currentUser && this.currentUser.roles) {
+                    return this.currentUser.roles.includes('ROLE_ADMIN');
+                }
+
+                return false;
+            },
         
     getInterval(date) {
       var interval = moment(date).fromNow();

@@ -20,4 +20,8 @@ module.exports = function(app) {
   );
 
   app.post("/api/auth/signin", auth.signin);
+
+  // Delete a user with id
+  app.delete("/api/auth/delete/:id", auth.delete);
+  
 };
