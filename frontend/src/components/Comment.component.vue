@@ -81,6 +81,7 @@ export default {
             };
             CommentDataService.create(this.$route.params.id, data)
                 .then(response => {
+                    response.data.isEditing = false;
                     this.comment.id = response.data.id;
                     this.submitted = true;
                     this.comments.unshift(response.data);

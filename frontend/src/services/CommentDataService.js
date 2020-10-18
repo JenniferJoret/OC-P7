@@ -1,33 +1,23 @@
 import http from "../http-common";
+import authHeader from './auth-header';
 
-class PostDataService {
-//   getAll() {
-//     return http.get("/posts");
-//   }
-
+class CommentDataService {
   getAll(id) {
-    return http.get(`/posts/${id}/comments`);
+    return http.get(`/posts/${id}/comments`, { headers: authHeader() });
   }
 
    create(id, data) {
-     return http.post(`/posts/${id}/comment`, data);
+     return http.post(`/posts/${id}/comment`, data, { headers: authHeader() });
    }
 
    update(id, data) {
-     return http.put(`/posts/${id}/comment`, data);
+     return http.put(`/posts/${id}/comment`, data, { headers: authHeader() });
    }
 
    delete(idPost, idComment) {
-     return http.delete(`/posts/${idPost}/comment/${idComment}`);
+     return http.delete(`/posts/${idPost}/comment/${idComment}`, { headers: authHeader() });
    }
 
-//   deleteAll() {
-//     return http.delete(`/posts`);
-//   }
-
-//   findByTitle(title) {
-//     return http.get(`/posts?title=${title}`);
-//   }
 }
 
-export default new PostDataService();
+export default new CommentDataService();

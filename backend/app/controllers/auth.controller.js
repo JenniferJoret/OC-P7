@@ -10,8 +10,6 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 var crypto = require("crypto");
 
-
-// const crypto = require('crypto');
 // On définit la fonction de cryptage (email)
 function mailCrypt(req) {
     const algorithm = process.env.CIPHER_ALGORITHM;

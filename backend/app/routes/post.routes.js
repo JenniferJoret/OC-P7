@@ -11,24 +11,21 @@ module.exports = function(app) {
   });
 
   // Create a new Post
-  app.post("/api/posts/", posts.create);
+  app.post("/api/posts/",[authJwt.verifyToken], posts.create);
 
   // Retrieve all Posts
-  app.get("/api/posts/", posts.findAll);
+  app.get("/api/posts/",[authJwt.verifyToken], posts.findAll);
 
   // Retrieve a single Post with id
-  app.get("/api/posts/:id", posts.findOne);
+  app.get("/api/posts/:id",[authJwt.verifyToken], posts.findOne);
 
   // Update a Post with id
-  app.put("/api/posts/:id", posts.update);
+  app.put("/api/posts/:id",[authJwt.verifyToken], posts.update);
 
   // Update a Post with like
-  app.put("/api/posts/:id/like", posts.likePost);
+  app.put("/api/posts/:id/like",[authJwt.verifyToken], posts.likePost);
 
   // Delete a Post with id
-  app.delete("/api/posts/:id", posts.delete);
-
-  // Delete all Posts
-  app.delete("/api/posts/", posts.deleteAll);
+  app.delete("/api/posts/:id",[authJwt.verifyToken], posts.delete);
 
 };

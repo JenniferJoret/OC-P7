@@ -2,7 +2,6 @@ const db = require("../models");
 const Comment = db.comment;
 const Post = db.post;
 const User = db.user;
-//const Op = db.Sequelize.Op;
 
 // Create and Save a new Comment
 exports.create = (req, res, next) => {
@@ -98,30 +97,6 @@ exports.update = (req, res, next) => {
             comment.save()
             res.send(comment);
         })
-
-
-
-    // Comment.update(req.body, {
-    //         where: {
-    //             id: req.body.commentId
-    //         }
-    //     })
-    //     .then(num => {
-    //         if (num == 1) {
-    //             res.send({
-    //                 message: "Comment was updated successfully."
-    //             });
-    //         } else {
-    //             res.send({
-    //                 message: `Cannot update Comment with id=${id}. Maybe Comment was not found or req.body is empty!`
-    //             });
-    //         }
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message: "Error updating Comment with id=" + id
-    //         });
-    //     });
 };
 
 // Delete a Comment with the specified id in the request
