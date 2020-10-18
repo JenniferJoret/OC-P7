@@ -48,6 +48,11 @@ hr {
   background-color: red;
 }
 
+.edit-delete {
+  border: none;
+  background-color: transparent;
+}
+
 .navbar {
   border-bottom: 5px solid #D1515A;
   background-color: #0A1F43;

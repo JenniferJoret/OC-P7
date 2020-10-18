@@ -84,35 +84,24 @@ exports.findOne = (req, res) => {
 // Update a Post by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
-
-    Post.update(req.body, {
-            where: {
-                id: id
-            }
-        })
-        .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "Le post a bien été mis à jour !"
-                });
-            } else {
-                res.send({
-                    message: `Impossible de mettre à jour le post avec l'id=${id}. Peut être que le post n'a pas été trouvé ou que le req.body est vide.`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Impossible de mettre à jour le post avec l'id=" + id
-            });
-        });
+    Post.findByPk(id)
+    .then(post => {
+        post.title = req.body.title;
+        post.content = req.body.content;
+        post.save()
+        res.send(post);
+    })
 };
 
 // Delete a Post with the specified id in the request
 exports.delete = (req, res, next) => {
-    const id = req.params.id;
-
-    Post.destroy({
+        const id = req.params.id;
+        Comment.destroy({
+            where: {
+                post_id: id
+            }
+        });
+        Post.destroy({
             where: {
                 id: id
             }
