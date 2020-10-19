@@ -5,23 +5,24 @@
           class="text-second">Groupomania</span> </h2>
       <hr>
       <div class="text-center text-white py-2">
-        <h4>L'Automne est arrivé !</h4>
+        <h3>L'Automne est arrivé !</h3>
         <p class=""> Préparez-vous à la fête d'Halloween et n'oubliez pas de participer à la tombola !</p>
       </div>
       <div class="text-center text-white py-2">
-        <h4>Réunion trimestrielle</h4>
+        <h3>Réunion trimestrielle</h3>
         <p class="">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores quia, officia autem,
           aliquid voluptatibus suscipit provident molestiae soluta corporis recusandae quisquam, doloremque ab hic! Eum
           molestias quae odio placeat animi. </p>
       </div>
     </div>
-    <h1 class="bg-t-white px-5 py-3 w-100 text-center text-second col-xl-6 mx-auto">Fil d'actualité</h1>
+    
 
     <section class="articles d-flex w-100 flex-column align-items-center mb-5 py-2 px-0 col-xl-6 mx-auto">
+      <h1 class="bg-t-white px-5 py-3 w-100 text-center text-second mx-auto">Fil d'actualité</h1>
       <article class="bg-t-white p-3 my-3 d-table w-100" v-for="(post, index) in posts" :key="index">
         <div class="mx-auto text-center px-md-4 pt-3">
           <!-- TITRE POST -->
-          <router-link class="h2" :to="'/post/' + post.id">{{ post.title }}</router-link>
+          <h2><router-link class="h2" :to="'/post/' + post.id">{{ post.title }}</router-link></h2>
           <hr>
           <!-- DATE/UTILISATEUR -->
           <div class="d-flex flex-column flex-md-row text-left">
@@ -56,11 +57,11 @@
           class="text-second">Groupomania</span> </h2>
       <hr>
       <div class="text-center text-white py-2">
-        <h4>L'Automne est arrivé !</h4>
+        <h3>L'Automne est arrivé !</h3>
         <p class=""> Préparez-vous à la fête d'Halloween et n'oubliez pas de participer à la tombola !</p>
       </div>
       <div class="text-center text-white py-2">
-        <h4>Réunion trimestrielle</h4>
+        <h3>Réunion trimestrielle</h3>
         <p class="">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores quia, officia autem,
           aliquid voluptatibus suscipit provident molestiae soluta corporis recusandae quisquam, doloremque ab hic! Eum
           molestias quae odio placeat animi. </p>
@@ -192,11 +193,3 @@ export default {
 
 
 </script>
-
-<style>
-.list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
-}
-</style>

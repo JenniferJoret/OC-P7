@@ -2,7 +2,7 @@
     <div class="bg-t-white col-xl-6 mx-auto mb-5 ">
         <!-- AJOUT COMMENTAIRE -->
         <div class="d-flex flex-column">
-            <p class="h3 text-center col-12 mx-auto py-4">Ajouter un commentaire</p>
+            <label for="content" class="h3 text-center col-12 mx-auto py-4">Ajouter un commentaire</label>
             <div class="form-group d-flex flex-column  flex-md-row justify-content-md-around pb-3">
                 <input class="form-control col-10 col-md-9 mx-auto" id="content" required v-model="comment.content"
                     name="content" />

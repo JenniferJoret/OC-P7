@@ -23,6 +23,7 @@ import {
   faEdit
 } from '@fortawesome/free-solid-svg-icons';
 
+
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faEdit);
 
 Vue.config.productionTip = false;

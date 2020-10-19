@@ -6,14 +6,12 @@
                 aria-label="Toggle navigation">
                 <span class="fas fa-bars"></span>
             </button>
-            <a class="navbar-brand m-0 order-1 col-10 col-md-auto mx-auto text-center" href="#">
-                <router-link v-if="currentUser" to="/posts" class="nav-link">
-                    <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg" alt="">
+                <router-link class="navbar-brand m-0 order-1 col-10 col-md-auto mx-auto text-center" v-if="currentUser" to="/posts">
+                    <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg" alt="Logo de Groupomania">
                 </router-link>
-                <router-link v-else to="/home" class="nav-link">
-                    <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg" alt="">
+                <router-link class="navbar-brand m-0 order-1 col-10 col-md-auto mx-auto text-center" v-else to="/home">
+                    <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg" alt="Logo de Groupomania">
                 </router-link>
-            </a>
             <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto px-3">
                     <li class="nav-item">
