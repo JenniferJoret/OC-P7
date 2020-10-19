@@ -39,10 +39,10 @@
       <!-- BOUTONS LIKE ET DISLIKE -->
       <div class="d-flex flex-column flex-md-row mx-auto px-lg-4 pb-3">
         <div class="d-flex mx-auto mx-md-4 ">
-          <button class="btn btn-outline-dark px-2 mx-1" :class="post.liked ? 'active' : ''"
+          <button class="btn btn-outline-dark px-2 mx-1" :class="liked ? 'active' : ''"
             @click="like(post.id)"><span class="fas fa-thumbs-up pr-1"></span>
             {{ getCountLikes(post.usersLiked) }}</button>
-          <button class="btn btn-outline-dark px-2 mx-1" :class="post.disliked ? 'active' : ''"
+          <button class="btn btn-outline-dark px-2 mx-1" :class="disliked ? 'active' : ''"
             @click="dislike(post.id)"><span class="fas fa-thumbs-down pr-1"></span>
             {{ getCountLikes(post.usersDisliked) }}</button>
         </div>
