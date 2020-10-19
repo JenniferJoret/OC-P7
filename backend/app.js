@@ -26,11 +26,15 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-// database
+// Model for our roles
 const db = require("./app/models");
 const Role = db.role;
 
 db.sequelize.sync();
+
+
+// TABLES INIT
+
 // force: true will drop the table if it already exists
 // db.sequelize.sync({force: true}).then(() => {
 //   console.log('Drop and Resync Database with { force: true }');
@@ -42,7 +46,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/post.routes')(app);
 require('./app/routes/comment.routes')(app);
 
-
+//roles base init
 function initial() {
   Role.create({
     id: 1,

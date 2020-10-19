@@ -1,15 +1,13 @@
 import AuthService from '../services/auth.service';
 
 const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+const initialState = user ? { status: {loggedIn: true}, user} : {status: {loggedIn: false},user: null};
 
 export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
-    login({ commit }, user) {
+    login({commit}, user) {
       return AuthService.login(user).then(
         user => {
           commit('loginSuccess', user);
@@ -21,11 +19,11 @@ export const auth = {
         }
       );
     },
-    logout({ commit }) {
+    logout({commit}) {
       AuthService.logout();
       commit('logout');
     },
-    signUp({ commit }, user) {
+    signUp({commit}, user) {
       return AuthService.signUp(user).then(
         response => {
           commit('registerSuccess');
@@ -37,7 +35,7 @@ export const auth = {
         }
       );
     },
-    delete({ commit }, id) {
+    delete({commit}, id) {
       return AuthService.delete(id).then(
         () => {
           commit('deleted');

@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../models");
 const User = db.user;
 
+// Check user token
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
 
@@ -22,6 +23,7 @@ verifyToken = (req, res, next) => {
   });
 };
 
+//check if user is admin
 isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {

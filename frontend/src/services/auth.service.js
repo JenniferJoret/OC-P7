@@ -1,6 +1,7 @@
 import http from "../http-common";
 
 class AuthService {
+  
   login(user) {
     return http
       .post('/auth/signin', {
@@ -15,11 +16,11 @@ class AuthService {
         return response.data;
       });
   }
-
+  
   logout() {
     localStorage.removeItem('user');
   }
-
+  
   signUp(user) {
     return http.post('/auth/signUp', {
       firstName: user.firstName,
@@ -28,9 +29,8 @@ class AuthService {
       password: user.password
     });
   }
-
+  
   delete(id) {
-    console.log("service : " + id);
     return http.delete(`/auth/delete/${id}`);
   }
 }

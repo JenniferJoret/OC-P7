@@ -4,6 +4,7 @@
     <comment></comment>
   </div>
 </template>
+
 <script>
 
 import Post from '../components/Post.component';
@@ -16,4 +17,5 @@ export default {
   Comment,
   }
 }
+
 </script>

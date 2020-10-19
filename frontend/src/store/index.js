@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { auth } from './auth.module';
+import {  auth  } from './auth.module';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    commentsCount : 0
+    commentsCount: 0
   },
   modules: {
     auth

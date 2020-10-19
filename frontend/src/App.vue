@@ -6,45 +6,48 @@
                 aria-label="Toggle navigation">
                 <span class="fas fa-bars"></span>
             </button>
-                <router-link class="navbar-brand m-0 order-1 col-10 col-md-auto mx-auto text-center" v-if="currentUser" to="/posts">
-                    <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg" alt="Logo de Groupomania">
-                </router-link>
-                <router-link class="navbar-brand m-0 order-1 col-10 col-md-auto mx-auto text-center" v-else to="/home">
-                    <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg" alt="Logo de Groupomania">
-                </router-link>
+            <router-link class="navbar-brand m-0 order-1 col-10 col-md-auto mx-auto text-center" v-if="currentUser"
+                to="/posts">
+                <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg"
+                    alt="Logo de Groupomania">
+            </router-link>
+            <router-link class="navbar-brand m-0 order-1 col-10 col-md-auto mx-auto text-center" v-else to="/home">
+                <img class="img-fluid" src="../src/assets/icon-left-font-monochrome-white.svg"
+                    alt="Logo de Groupomania">
+            </router-link>
             <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto px-3">
                     <li class="nav-item">
                         <router-link v-if="currentUser" to="/posts" class="nav-link">
-                            <font-awesome-icon icon="home" /> Accueil
+                            <span class="fas fa-home pl-1"></span> Accueil
                         </router-link>
                         <router-link v-else to="/home" class="nav-link">
-                            <font-awesome-icon icon="home" /> Accueil
+                            <span class="fas fa-home pl-1"></span> Accueil
                         </router-link>
                     </li>
                     <li v-if="currentUser" class="nav-item">
                         <router-link to="/addPost" class="nav-link">
-                            <font-awesome-icon icon="edit" /> Ajouter un post
+                            <span class="fas fa-edit pl-1"></span> Ajouter un post
                         </router-link>
                     </li>
                     <li v-if="!currentUser" class="nav-item">
                         <router-link to="/signUp" class="nav-link">
-                            <font-awesome-icon icon="user-plus" /> Inscription
+                            <span class="fas fa-user-plus pl-1"></span> Inscription
                         </router-link>
                     </li>
                     <li v-if="!currentUser" class="nav-item">
                         <router-link to="/login" class="nav-link">
-                            <font-awesome-icon icon="sign-in-alt" /> Connexion
+                            <span class="fas fa-sign-in-alt pl-1"></span> Connexion
                         </router-link>
                     </li>
                     <li v-if="currentUser" class="nav-item">
                         <router-link to="/profile" class="nav-link">
-                            <font-awesome-icon icon="user" /> {{ currentUser.firstName }}
+                            <span class="fas fa-user pl-1"></span> {{ currentUser.firstName }}
                         </router-link>
                     </li>
                     <li v-if="currentUser" class="nav-item">
                         <a class="nav-link" href @click.prevent="logOut">
-                            <font-awesome-icon icon="sign-out-alt" /> Déconnexion
+                            <span class="fas fa-sign-out-alt pl-1"></span> Déconnexion
                         </a>
                     </li>
                 </ul>
@@ -55,17 +58,18 @@
 </template>
 
 <script>
-    export default {
-        computed: {
-            currentUser() {
-                return this.$store.state.auth.user;
-            },
+export default {
+    computed: {
+        currentUser() {
+            return this.$store.state.auth.user;
         },
-        methods: {
-            logOut() {
-                this.$store.dispatch('auth/logout');
-                this.$router.push('/login');
-            }
+    },
+    methods: {
+        //logout user
+        logOut() {
+            this.$store.dispatch('auth/logout');
+            this.$router.push('/login');
         }
-    };
+    }
+};
 </script>

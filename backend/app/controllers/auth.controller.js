@@ -23,7 +23,7 @@ function mailCrypt(req) {
   return mailCrypted;
 }
 
-
+// SIGN UP
 exports.signup = (req, res) => {
   // Save User to Database
   const mailCrypted = mailCrypt(req)
@@ -55,7 +55,7 @@ exports.signup = (req, res) => {
               }).then(roles => {
                 user.setRoles(roles).then(() => {
                   res.send({
-                    message: "User registered successfully!"
+                    message: "Utilisateur enregistré avec succès !"
                   });
                 });
               });
@@ -71,7 +71,6 @@ exports.signup = (req, res) => {
                 }, process.env.TOKEN_KEY, {
                   expiresIn: 86400 // 24 hours
                 });
-
                 var authorities = [];
                 user.getRoles().then(roles => {
                   for (let i = 0; i < roles.length; i++) {
@@ -97,9 +96,9 @@ exports.signup = (req, res) => {
           });
       }
     })
-
 };
 
+//SIGN IN
 exports.signin = (req, res) => {
   const mailCrypted = mailCrypt(req);
   User.findOne({

@@ -15,10 +15,10 @@ module.exports = function (app) {
   // Create a new comment
   app.post("/api/posts/:id/comment", [authJwt.verifyToken], comments.create);
 
-  // Retrieve a single comment with id
+  // Retrieve comments with post id
   app.get("/api/posts/:id/comments", [authJwt.verifyToken], comments.findAll);
 
-  // // Update a comment with id
+  // Update a comment with id
   app.put("/api/posts/:id/comment", [authJwt.verifyToken], comments.update);
 
   // Delete a comment with id

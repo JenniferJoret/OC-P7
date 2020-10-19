@@ -12,6 +12,7 @@ module.exports = function (app) {
     next();
   });
 
+  // Sign Up
   app.post(
     "/api/auth/signup",
     [
@@ -20,6 +21,7 @@ module.exports = function (app) {
     auth.signup
   );
 
+  // Sign In
   app.post("/api/auth/signin", auth.signin);
 
   // Delete a user with id

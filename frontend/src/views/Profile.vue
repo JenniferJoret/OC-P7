@@ -12,12 +12,10 @@
       </ul>
       <button @click="deleteUser(currentUser.id)" class="btn btn-danger mx-auto">Supprimer le compte</button>
     </div>
-
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'Profile',
   computed: {
@@ -26,13 +24,13 @@ export default {
     }
   },
   methods: {
-deleteUser() {
-  const id = this.currentUser.id;
-  console.log(id);
-  this.$store.dispatch('auth/delete', id)
-      .then(() => {
-        this.$router.push('/home');
-      });
+    //delete user and all its data (user posts, and comments)
+    deleteUser() {
+      const id = this.currentUser.id;
+      this.$store.dispatch('auth/delete', id)
+        .then(() => {
+          this.$router.push('/home');
+        });
     },
   },
   mounted() {

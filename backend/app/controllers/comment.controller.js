@@ -8,22 +8,19 @@ exports.create = (req, res, next) => {
     // Validate request
     if (!req.body.content) {
         res.status(400).send({
-            message: "Content can not be empty!"
+            message: "Le contenu ne peut être vide !"
         });
         return;
     }
-
     // Create a Comment
     const comment = {
         user_id: req.body.userId,
         post_id: req.params.id,
         content: req.body.content
     };
-
     // Save Comment in the database
     Comment.create(comment)
         .then(data => {
-
             Comment.findOne({
                     where: {
                         id: data.id
@@ -32,19 +29,18 @@ exports.create = (req, res, next) => {
                         model: User
                     }]
                 })
-
                 .then(data => {
                     res.send(data);
                 })
                 .catch(err => {
                     res.status(500).send({
-                        message: "Error retrieving Comment with id=" + id
+                        message: "Impossible de trouver le commentaire avec l'id = " + id
                     });
                 });
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the Comment."
+                message: err.message || "Une erreur est survenue pendant la création du commentaire."
             });
         });
 };
@@ -68,7 +64,7 @@ exports.findAll = (req, res, next) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving comments."
+                message: err.message || "Une erreur est survenue pendant la recherche des commentaires."
             });
         });
 };
@@ -76,14 +72,13 @@ exports.findAll = (req, res, next) => {
 // Find a single Comment with an id (moderation)
 exports.findOne = (req, res, next) => {
     const id = req.params.id;
-
     Comment.findById(id)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Comment with id=" + id
+                message: "Impossible de trouver le commentaire avec l'id = " + id
             });
         });
 };
@@ -111,17 +106,17 @@ exports.delete = (req, res, next) => {
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Comment was deleted successfully!"
+                    message: "Le commentaire a bien été supprimé !"
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Comment with id=${id}. Maybe Comment was not found!`
+                    message: `Impossible de supprimer le commentaire avec l'id = ${id}. Peut être que le commentaire n'a pas été trouvé.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Comment with id=" + id
+                message: "Impossible de supprimer le commentaire avec l'id = " + id
             });
         });
 };
@@ -134,12 +129,12 @@ exports.deleteAll = (req, res, next) => {
         })
         .then(nums => {
             res.send({
-                message: `${nums} Comments were deleted successfully!`
+                message: `${nums} commentaires ont été supprimés avec succès !`
             });
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Some error occurred while removing all comments."
+                message: err.message || "Une erreur est survenue pendant la suppression des commentaires."
             });
         });
 };

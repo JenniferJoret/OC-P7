@@ -40,6 +40,7 @@ export default {
     }
   },
   methods: {
+    //save post
     savePost() {
       var data = {
         userId: this.currentUser.id,
@@ -52,7 +53,7 @@ export default {
           this.submitted = true;
         })
     },
-    
+    //set values by default to create a new post
     newPost() {
       this.submitted = false;
       this.post = {};

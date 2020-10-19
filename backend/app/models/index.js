@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
     dialectOptions: {
       useUTC: true, //for reading from database
       dateStrings: true,
-      charset: 'utf8mb4', //gestion smileys et caractères spéciaux
+      charset: 'utf8mb4', //emojis and special characters
     },
     timezone: 'Europe/Paris',
     operatorsAliases: false,
@@ -28,19 +28,19 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+//Models
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.post = require("../models/post.model.js")(sequelize, Sequelize);
 db.comment = require("../models/comment.model.js")(sequelize, Sequelize);
 
+
+//Tables relations
 db.post.belongsTo(db.user);
 db.user.hasMany(db.post);
 db.comment.belongsTo(db.user);
 db.comment.belongsTo(db.post);
 db.post.hasMany(db.comment);
-
-
-
 db.role.belongsToMany(db.user, {
   through: "user_roles",
   foreignKey: "roleId",
@@ -52,6 +52,6 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["user", "admin"];
 
 module.exports = db;

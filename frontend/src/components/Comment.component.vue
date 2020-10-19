@@ -46,7 +46,6 @@
             <hr>
         </section>
     </div>
-
 </template>
 
 <script>
@@ -70,17 +69,18 @@ export default {
         }
     },
     methods: {
+        //get all comments with post id
         retrieveComments(id) {
             CommentDataService.getAll(id)
                 .then(response => {
-                for (var i = 0, len = response.data.length; i < len; i++) {
-                response.data[i].isEditing = false
-                }
-                this.comments = response.data;
-                this.$store.state.commentsCount = this.comments.length;
-            }
-            )
+                    for (var i = 0, len = response.data.length; i < len; i++) {
+                        response.data[i].isEditing = false
+                    }
+                    this.comments = response.data;
+                    this.$store.state.commentsCount = this.comments.length;
+                })
         },
+        //create a new comment
         saveComment() {
             var data = {
                 userId: this.currentUser.id,
@@ -96,43 +96,44 @@ export default {
                     this.$store.state.commentsCount = this.comments.length;
                 })
         },
+        //toggle edit
         editComment(comment) {
-            comment.isEditing=!comment.isEditing;
+            comment.isEditing = !comment.isEditing;
         },
-        
-        deleteComment(comment) {
-
-            CommentDataService.delete(this.$route.params.id, comment.id)
-                .then(response => {
-                    this.comments.splice(this.comments.indexOf(comment), 1)
-                    this.$store.state.commentsCount = this.comments.length;
-                })
-        },
+        //update a comment after edit
         updateComment(comment) {
-        var data = {
+            var data = {
                 userId: comment.userId,
                 content: comment.content,
                 commentId: comment.id
             };
-            console.log(data)
             CommentDataService.update(this.$route.params.id, data)
                 .then(response => {
                     comment.content = response.data.content;
                     comment.isEditing = false;
                 })
         },
-            isAdmin() {
-                if (this.currentUser && this.currentUser.roles) {
-                    return this.currentUser.roles.includes('ROLE_ADMIN');
-                }
+        //delete a comment
+        deleteComment(comment) {
+            CommentDataService.delete(this.$route.params.id, comment.id)
+                .then(() => {
+                    this.comments.splice(this.comments.indexOf(comment), 1)
+                    this.$store.state.commentsCount = this.comments.length;
+                })
+        },
+        //check if admin
+        isAdmin() {
+            if (this.currentUser && this.currentUser.roles) {
+                return this.currentUser.roles.includes('ROLE_ADMIN');
+            }
 
-                return false;
-            },
-        
-    getInterval(date) {
-      var interval = moment(date).fromNow();
-      return interval
-    },
+            return false;
+        },
+        //get time interval
+        getInterval(date) {
+            var interval = moment(date).fromNow();
+            return interval
+        },
     },
 
     mounted() {

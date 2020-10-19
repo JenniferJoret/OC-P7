@@ -13,7 +13,7 @@
             <p class="user px-md-2 mb-0"><span
                 class="fas fa-user-circle pr-1"></span>{{ post.user.firstName + ' ' + post.user.lastName }}</p>
           </div>
-        <!-- BOUTONS EDITER/SUPPRIMER -->
+          <!-- BOUTONS EDITER/SUPPRIMER -->
           <div class="d-flex flex-column flex-md-row">
             <button v-if="post.userId === currentUser.id" class="mx-2 edit-delete" @click="editPost(post)"><span
                 class="fas fa-edit pr-1"></span> </button>
@@ -47,7 +47,9 @@
             {{ getCountLikes(post.usersDisliked) }}</button>
         </div>
         <!-- BOUTON COMMENTAIRES -->
-        <router-link class="d-flex mx-auto mx-md-4 comment-link btn btn-outline-dark mt-3 mt-md-0" :to="'/post/' + post.id"> {{ commentsCount }} commentaire(s) <span class="fas fa-comment-dots pl-1"></span> </router-link>
+        <router-link class="d-flex mx-auto mx-md-4 comment-link btn btn-outline-dark mt-3 mt-md-0"
+          :to="'/post/' + post.id"> {{ commentsCount }} commentaire(s) <span class="fas fa-comment-dots pl-1"></span>
+        </router-link>
       </div>
     </article>
   </section>
@@ -77,8 +79,8 @@ export default {
     }
   },
   methods: {
+    //get post with post id
     getPost(id) {
-      console.log(this.currentUser)
       PostDataService.get(id)
         .then(response => {
           response.data.isEditing = false;
@@ -91,14 +93,8 @@ export default {
             this.disliked = false
           }
         })
-        .catch(e => {
-          console.log(e);
-        });
-      },
-    getInterval(date) {
-      var interval = moment(date).fromNow();
-      return interval
     },
+    // post likes
     like(postId) {
       PostDataService.get(postId)
         .then(response => {
@@ -109,7 +105,7 @@ export default {
             sendLike = 1;
             this.liked = true
             this.disliked = false
-          }else{
+          } else {
             this.liked = false
           }
           var data = {
@@ -123,6 +119,7 @@ export default {
             })
         })
     },
+    // post dislikes
     dislike(postId) {
       PostDataService.get(postId)
         .then(response => {
@@ -133,7 +130,7 @@ export default {
             sendLike = -1;
             this.liked = false
             this.disliked = true
-          }else{
+          } else {
             this.disliked = false
           }
           var data = {
@@ -147,21 +144,17 @@ export default {
             })
         })
     },
-    getCountLikes(str) {
-      let likes = str.split(',');
-      likes = likes.length;
-      return likes - 1
-    },
+    // toggle edit
     editPost(post) {
       post.isEditing = !post.isEditing;
     },
+    //update post after edit
     updatePost(post) {
       var data = {
         userId: post.userId,
         content: post.content,
         title: post.title
       };
-      console.log(data)
       PostDataService.update(this.$route.params.id, data)
         .then(response => {
           post.title = response.data.title;
@@ -169,18 +162,29 @@ export default {
           post.isEditing = false;
         })
     },
+    //delete post
     deletePost() {
       PostDataService.delete(this.$route.params.id).then(() => {
         this.$router.push('/posts');
       });
     },
+    //check if admin
     isAdmin() {
       if (this.currentUser && this.currentUser.roles) {
-        console.log(this.currentUser.roles)
         return this.currentUser.roles.includes('ROLE_ADMIN');
       }
-
       return false;
+    },
+    //get time interval
+    getInterval(date) {
+      var interval = moment(date).fromNow();
+      return interval
+    },
+  //get count of likes and dislikes
+    getCountLikes(str) {
+      let likes = str.split(',');
+      likes = likes.length;
+      return likes - 1
     },
   },
 

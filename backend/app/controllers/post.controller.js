@@ -145,6 +145,7 @@ exports.deleteAll = (req, res) => {
         });
 };
 
+// Likes and dislikes
 exports.likePost = (req, res, next) => {
     const id = req.params.id;
     const like = req.body.like;

@@ -16,21 +16,18 @@
               name="lastName" />
             <div v-if="submitted && errors.has('lastName')" class="alert-danger">{{errors.first('lastName')}}</div>
           </div>
-
           <div class="form-group">
             <label for="email">Email</label>
             <input v-model="user.email" v-validate="'required|email|max:50'" type="email" class="form-control"
               name="email" />
             <div v-if="submitted && errors.has('email')" class="alert-danger">{{errors.first('email')}}</div>
           </div>
-
           <div class="form-group">
             <label for="password">Mot de passe</label>
             <input v-model="user.password" v-validate="'required|min:6|max:40'" type="password" class="form-control"
               name="password" autocomplete="on"/>
             <div v-if="submitted && errors.has('password')" class="alert-danger">{{errors.first('password')}}</div>
           </div>
-          
           <div class="form-group">
             <button class="btn btn-primary btn-block">S'inscrire</button>
           </div>
@@ -66,6 +63,7 @@ export default {
     }
   },
   methods: {
+    //register user
     handleRegister() {
       this.message = '';
       this.submitted = true;
